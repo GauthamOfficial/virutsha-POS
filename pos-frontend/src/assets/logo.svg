@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Virutsha POS">
+  <title>Virutsha POS</title>
+
+  <rect width="64" height="64" rx="16" fill="#1a1a1a" />
+
+  <!-- The plate -->
+  <circle cx="32" cy="32" r="21" fill="none" stroke="#f6b100" stroke-width="2.5" />
+  <circle cx="32" cy="32" r="15.5" fill="none" stroke="#f6b100" stroke-width="1" opacity="0.4" />
+
+  <!-- A 'V' for Virutsha, set like cutlery on the plate -->
+  <path
+    d="M24 24 L32 41 L40 24"
+    fill="none"
+    stroke="#f6b100"
+    stroke-width="4"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

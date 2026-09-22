@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    /* Stops the layout shifting sideways when a page grows a scrollbar. */
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    @apply bg-shell text-ink;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Number inputs: hide the tiny spinners, which are useless on a touchscreen
+     and easy to hit by accident at a busy till. */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  /* Anything focused by keyboard gets a clear ring. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand ring-offset-2 ring-offset-shell;
+  }
+}
+
+@layer components {
+  /* Shown while the app checks whether anyone is signed in. */
+  .fullscreen-loader {
+    @apply fixed inset-0 z-[9999] flex items-center justify-center bg-shell;
+  }
+
+  .spinner {
+    @apply h-12 w-12 rounded-full;
+    border: 4px solid rgba(255, 255, 255, 0.15);
+    border-top-color: #f6b100;
+    animation: spin 0.9s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Only the receipt is printed - never the surrounding app. */
+@media print {
+  body {
+    background: #fff;
+  }
+}

@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Secrets and local configuration
+.env
+.env.local
+*.local
+
+# Build output
+dist/
+dist-ssr/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editors and OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db

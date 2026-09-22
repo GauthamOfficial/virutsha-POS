@@ -1,0 +1,119 @@
+# 🍽️ Virutsha POS
+
+A point-of-sale system for a restaurant that serves both local customers and
+visitors, built on the MERN stack.
+
+**Its defining feature is dual pricing.** Every dish carries a *Local* price and a
+*Foreigner* price, and one tap switches the entire menu and the running bill between
+them — at any point in the order, including after everything has been rung up.
+
+👉 **[SETUP-GUIDE.md](SETUP-GUIDE.md)** — installing it on the laptop, and how to use
+it day to day.
+
+---
+
+## Features
+
+| | |
+|---|---|
+| 💱 **Dual pricing** | Local / Foreigner switch that re-prices the whole cart live. The choice is remembered between orders and printed on the bill. The two labels are editable. |
+| 🍛 **Menu management** | Categories and dishes with a photo and both prices. Photos are shrunk in the browser and stored in the database, so there is no file server to run. |
+| 🧾 **Billing & invoicing** | Sequential bill numbers, an 80mm thermal-printer receipt that also prints on A4, and reprinting of any past bill. |
+| 📊 **Sales reports** | Daily, weekly, monthly, yearly or a custom range — income, bill count, average bill, income over time, Local vs Foreigner split, cash vs card split, best sellers, and CSV export. |
+| 💵 **Cash & card** | Cash with a change calculator, or card through the shop's own machine. No payment gateway. |
+| 👥 **Roles** | Cashiers take orders; Admins also manage the menu, staff, settings and reports. |
+| ⊘ **Voiding** | A wrong bill is voided, never deleted — it stays on record and drops out of the sales figures. |
+| 🔌 **Offline-capable** | Runs entirely on the laptop with a local database. No internet needed to take an order or print a bill. |
+
+## Tech stack
+
+| Category | Technology |
+|---|---|
+| Frontend | React 18, Redux Toolkit, React Query, Tailwind CSS, Vite |
+| Backend | Node.js, Express |
+| Database | MongoDB (Mongoose) |
+| Auth | JWT — httpOnly cookie, with Bearer token fallback for cross-domain hosting |
+
+## Project layout
+
+```
+virutsha-pos/
+├─ Setup (run once).bat     First-time install on Windows
+├─ Start POS.bat            Double-click to run the POS
+├─ SETUP-GUIDE.md           Install + day-to-day usage
+│
+├─ pos-backend/
+│  ├─ app.js                Express app; also serves the built frontend
+│  ├─ seed.js               Creates the admin login + a starter menu
+│  ├─ models/               User, Category, Dish, Order, Settings, Counter
+│  ├─ controllers/          Including the bill maths and the reports
+│  ├─ routes/
+│  └─ api/index.js          Serverless entry point (optional cloud hosting)
+│
+└─ pos-frontend/
+   └─ src/
+      ├─ pages/             Home, NewOrder, Bills, Reports, Admin, Auth
+      ├─ components/
+      │  ├─ order/          CustomerTypeToggle, MenuGrid, CartPanel
+      │  ├─ admin/          Dish, Category, Staff and Settings management
+      │  ├─ invoice/        The printable bill
+      │  └─ reports/        Sales chart
+      └─ redux/slices/      cart, customer, user, settings
+```
+
+## Running it for development
+
+```bash
+# Terminal 1 — backend
+cd pos-backend
+cp .env.example .env        # then check MONGODB_URI
+npm install
+npm run seed                # once: creates the admin login + starter menu
+npm run dev                 # http://localhost:8000
+
+# Terminal 2 — frontend
+cd pos-frontend
+npm install
+npm run dev                 # http://localhost:5173
+```
+
+For production on the laptop, build the frontend once (`npm run build` in
+`pos-frontend`) and then just run the backend — it serves the built app itself, so
+the whole POS is on `http://localhost:8000` with no CORS and one window to keep open.
+
+## API
+
+All routes need a login except `/api/health` and `/api/user/setup-status`.
+Routes marked 🔒 are Admin-only.
+
+| Method | Route | Purpose |
+|---|---|---|
+| `GET` | `/api/health` | Is the server up |
+| `GET` | `/api/user/setup-status` | Does this installation still need its first account |
+| `POST` | `/api/user/register` | Create a user (open only while no user exists, then 🔒) |
+| `POST` | `/api/user/login` | Log in; returns a token |
+| `GET` | `/api/user` | The logged-in user |
+| `GET/PUT/DELETE` | `/api/user/staff...` | 🔒 Manage staff |
+| `GET` | `/api/category` | List categories with dish counts |
+| `POST/PUT/DELETE` | `/api/category...` | 🔒 Manage categories |
+| `GET` | `/api/dish` | List dishes |
+| `POST/PUT/DELETE` | `/api/dish...` | 🔒 Manage dishes |
+| `POST` | `/api/order` | Save a bill |
+| `POST` | `/api/order/preview` | Price a bill without saving it |
+| `GET` | `/api/order` | Search bills (date range, text, paging) |
+| `PUT` | `/api/order/:id/void` | 🔒 Void a bill |
+| `GET` | `/api/report/overview` | Today / this week / this month |
+| `GET` | `/api/report/sales` | 🔒 Full report for a period |
+| `GET/PUT` | `/api/settings` | Shop settings (PUT is 🔒) |
+
+### A note on how bills are priced
+
+The browser sends only *which dish* and *how many*, plus the Local/Foreigner
+choice. The server looks up the real prices, picks the right one for the customer
+type, and recalculates the whole bill before saving. Prices coming from the browser
+are ignored entirely, so a tampered or out-of-date page cannot change what gets
+charged or recorded.
+
+---
+
+© 2026 Kumar Gautham. All rights reserved. See [LICENSE](LICENSE).
