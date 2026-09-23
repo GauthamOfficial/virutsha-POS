@@ -30,7 +30,7 @@ function Layout() {
   const hideHeader = location.pathname === "/auth";
 
   return (
-    <div className="min-h-screen bg-[#1f1f1f]">
+    <div className="min-h-screen bg-shell">
       {!hideHeader && <Header />}
       <Routes>
         <Route path="/auth" element={isAuth ? <Navigate to="/" replace /> : <Auth />} />

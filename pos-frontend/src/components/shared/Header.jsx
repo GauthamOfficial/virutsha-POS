@@ -4,12 +4,12 @@ import { useMutation } from "@tanstack/react-query";
 import { FaUserCircle } from "react-icons/fa";
 import { IoLogOut } from "react-icons/io5";
 import { MdPointOfSale, MdReceiptLong, MdInsights, MdSettings, MdHome } from "react-icons/md";
-import logo from "../../assets/logo.svg";
 import { logout } from "../../https";
 import { clearToken } from "../../https/axiosWrapper";
 import { removeUser } from "../../redux/slices/userSlice";
 import { resetSettings } from "../../redux/slices/settingsSlice";
 import { clearCart } from "../../redux/slices/cartSlice";
+import Wordmark from "./Wordmark";
 
 const navItems = [
   { to: "/", label: "Home", icon: <MdHome size={20} />, end: true },
@@ -21,7 +21,6 @@ const navItems = [
 
 const Header = () => {
   const user = useSelector((state) => state.user);
-  const shopName = useSelector((state) => state.settings.data.restaurantName);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -41,16 +40,14 @@ const Header = () => {
   const visibleItems = navItems.filter((item) => !item.adminOnly || user.role === "Admin");
 
   return (
-    <header className="sticky top-0 z-40 flex flex-wrap items-center justify-between gap-3 bg-[#1a1a1a] px-4 py-3 md:px-8">
-      <div
+    <header className="sticky top-0 z-40 flex flex-wrap items-center justify-between gap-3 bg-terracotta px-4 py-3 shadow-card md:px-8">
+      <button
         onClick={() => navigate("/")}
-        className="flex cursor-pointer items-center gap-2"
+        className="flex items-center gap-3 text-left"
+        aria-label="Go to home"
       >
-        <img src={logo} className="h-9 w-9 rounded-full" alt="logo" />
-        <h1 className="text-lg font-semibold tracking-wide text-[#f5f5f5]">
-          {shopName || "Virutsha"}
-        </h1>
-      </div>
+        <Wordmark size="sm" tone="cream" />
+      </button>
 
       <nav className="order-3 flex w-full items-center gap-1 overflow-x-auto scrollbar-hide md:order-none md:w-auto md:gap-2">
         {visibleItems.map((item) => (
@@ -61,8 +58,8 @@ const Header = () => {
             className={({ isActive }) =>
               `flex shrink-0 items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition ${
                 isActive
-                  ? "bg-[#f6b100] text-[#1f1f1f]"
-                  : "text-[#ababab] hover:bg-[#262626] hover:text-[#f5f5f5]"
+                  ? "bg-mustard text-ink"
+                  : "text-shell/80 hover:bg-terracotta-deep hover:text-shell"
               }`
             }
           >
@@ -73,15 +70,15 @@ const Header = () => {
       </nav>
 
       <div className="flex items-center gap-3">
-        <FaUserCircle className="text-3xl text-[#f5f5f5]" />
+        <FaUserCircle className="text-3xl text-shell/70" />
         <div className="hidden flex-col items-start sm:flex">
-          <span className="text-sm font-semibold text-[#f5f5f5]">{user.name}</span>
-          <span className="text-xs text-[#ababab]">{user.role}</span>
+          <span className="text-sm font-semibold text-shell">{user.name}</span>
+          <span className="text-xs text-shell/70">{user.role}</span>
         </div>
         <button
           onClick={() => logoutMutation.mutate()}
           title="Log out"
-          className="rounded-lg p-2 text-[#ababab] transition hover:bg-[#262626] hover:text-red-400"
+          className="rounded-lg p-2 text-shell/80 transition hover:bg-terracotta-deep hover:text-shell"
         >
           <IoLogOut size={24} />
         </button>

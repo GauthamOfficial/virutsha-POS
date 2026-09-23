@@ -35,8 +35,8 @@ const Admin = () => {
             onClick={() => setActiveTab(tab.key)}
             className={`flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition ${
               activeTab === tab.key
-                ? "bg-[#f6b100] text-[#1f1f1f]"
-                : "bg-[#1a1a1a] text-[#ababab] hover:text-[#f5f5f5]"
+                ? "bg-terracotta text-shell"
+                : "bg-panel text-muted hover:text-ink"
             }`}
           >
             {tab.icon} {tab.label}

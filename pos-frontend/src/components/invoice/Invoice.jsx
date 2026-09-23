@@ -216,7 +216,7 @@ const Invoice = ({ order, onClose }) => {
         <div className="mt-4 flex gap-2">
           <button
             onClick={handlePrint}
-            className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#025cca] py-3 font-semibold text-white transition hover:bg-[#0270f0]"
+            className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-terracotta py-3 font-semibold text-white transition hover:bg-terracotta-deep"
           >
             <FaPrint /> Print Bill
           </button>

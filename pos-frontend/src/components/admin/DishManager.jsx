@@ -53,21 +53,21 @@ const DishManager = () => {
     <div>
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-3">
-        <div className="flex min-w-[200px] flex-1 items-center gap-3 rounded-xl bg-[#1a1a1a] px-4 py-3">
-          <FaSearch className="text-[#ababab]" />
+        <div className="flex min-w-[200px] flex-1 items-center gap-3 rounded-xl bg-panel px-4 py-3">
+          <FaSearch className="text-muted" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search dishes"
-            className="w-full bg-transparent text-[#f5f5f5] outline-none placeholder:text-[#6b6b6b]"
+            className="w-full bg-transparent text-ink outline-none placeholder:text-faint"
           />
         </div>
 
         <select
           value={categoryFilter}
           onChange={(e) => setCategoryFilter(e.target.value)}
-          className="rounded-xl bg-[#1a1a1a] px-4 py-3 text-sm text-[#f5f5f5] outline-none"
+          className="rounded-xl bg-panel px-4 py-3 text-sm text-ink outline-none"
         >
           <option value="all">All categories</option>
           {categories.map((category) => (
@@ -79,7 +79,7 @@ const DishManager = () => {
 
         <button
           onClick={() => setEditing("new")}
-          className="flex items-center gap-2 rounded-xl bg-[#f6b100] px-5 py-3 font-bold text-[#1f1f1f] transition hover:bg-[#ffc528]"
+          className="flex items-center gap-2 rounded-xl bg-terracotta px-5 py-3 font-bold text-shell transition hover:bg-terracotta-deep"
         >
           <FaPlus size={14} /> Add Dish
         </button>
@@ -88,7 +88,7 @@ const DishManager = () => {
       {/* List */}
       <div className="mt-4">
         {isLoading ? (
-          <p className="py-10 text-center text-[#ababab]">Loading dishes...</p>
+          <p className="py-10 text-center text-muted">Loading dishes...</p>
         ) : visibleDishes.length === 0 ? (
           <EmptyState
             icon={<BiSolidDish />}
@@ -102,7 +102,7 @@ const DishManager = () => {
               dishes.length === 0 && (
                 <button
                   onClick={() => setEditing("new")}
-                  className="mt-2 rounded-lg bg-[#f6b100] px-5 py-2.5 font-bold text-[#1f1f1f]"
+                  className="mt-2 rounded-lg bg-terracotta px-5 py-2.5 font-bold text-shell"
                 >
                   Add the first dish
                 </button>
@@ -110,9 +110,9 @@ const DishManager = () => {
             }
           />
         ) : (
-          <div className="overflow-x-auto rounded-xl bg-[#1a1a1a]">
+          <div className="overflow-x-auto rounded-xl bg-panel">
             <table className="w-full min-w-[620px] text-left text-sm">
-              <thead className="bg-[#262626] text-xs uppercase tracking-wide text-[#ababab]">
+              <thead className="bg-raised text-xs uppercase tracking-wide text-muted">
                 <tr>
                   <th className="p-3">Dish</th>
                   <th className="p-3">Category</th>
@@ -124,10 +124,10 @@ const DishManager = () => {
               </thead>
               <tbody>
                 {visibleDishes.map((dish) => (
-                  <tr key={dish._id} className="border-t border-[#2a2a2a]">
+                  <tr key={dish._id} className="border-t border-line">
                     <td className="p-3">
                       <div className="flex items-center gap-3">
-                        <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-[#262626]">
+                        <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-raised">
                           {dish.image ? (
                             <img
                               src={dish.image}
@@ -136,30 +136,30 @@ const DishManager = () => {
                               loading="lazy"
                             />
                           ) : (
-                            <BiSolidDish className="text-[#4a4a4a]" />
+                            <BiSolidDish className="text-faint" />
                           )}
                         </div>
                         <div>
-                          <p className="font-semibold text-[#f5f5f5]">{dish.name}</p>
+                          <p className="font-semibold text-ink">{dish.name}</p>
                           {dish.description && (
-                            <p className="text-xs text-[#6b6b6b]">{dish.description}</p>
+                            <p className="text-xs text-faint">{dish.description}</p>
                           )}
                         </div>
                       </div>
                     </td>
-                    <td className="p-3 text-[#ababab]">{dish.category?.name}</td>
-                    <td className="p-3 text-right font-semibold text-[#f6b100]">
+                    <td className="p-3 text-muted">{dish.category?.name}</td>
+                    <td className="p-3 text-right font-semibold text-mustard-deep">
                       {formatMoney(dish.priceLocal, currency)}
                     </td>
-                    <td className="p-3 text-right font-semibold text-[#7fbaff]">
+                    <td className="p-3 text-right font-semibold text-forest">
                       {formatMoney(dish.priceForeign, currency)}
                     </td>
                     <td className="p-3 text-center">
                       <span
                         className={`rounded px-2 py-0.5 text-xs font-semibold ${
                           dish.isAvailable
-                            ? "bg-[#14331b] text-[#02ca3a]"
-                            : "bg-[#3a2020] text-[#ff7a7a]"
+                            ? "bg-forest-soft text-forest"
+                            : "bg-danger-soft text-danger"
                         }`}
                       >
                         {dish.isAvailable ? "Yes" : "No"}
@@ -170,14 +170,14 @@ const DishManager = () => {
                         <button
                           onClick={() => setEditing(dish)}
                           title="Edit"
-                          className="rounded-lg bg-[#262626] p-2 text-[#ababab] transition hover:text-[#f5f5f5]"
+                          className="rounded-lg bg-raised p-2 text-muted transition hover:text-ink"
                         >
                           <MdEdit size={16} />
                         </button>
                         <button
                           onClick={() => setDeleteTarget(dish)}
                           title="Delete"
-                          className="rounded-lg bg-[#262626] p-2 text-[#ababab] transition hover:text-red-400"
+                          className="rounded-lg bg-raised p-2 text-muted transition hover:text-danger"
                         >
                           <MdDelete size={16} />
                         </button>
@@ -208,24 +208,24 @@ const DishManager = () => {
         onClose={() => setDeleteTarget(null)}
         title="Delete dish"
       >
-        <p className="text-sm text-[#ababab]">
-          Delete <span className="font-semibold text-[#f5f5f5]">{deleteTarget?.name}</span>? Past
+        <p className="text-sm text-muted">
+          Delete <span className="font-semibold text-ink">{deleteTarget?.name}</span>? Past
           bills keep their record of it.
         </p>
-        <p className="mt-2 text-xs text-[#6b6b6b]">
+        <p className="mt-2 text-xs text-faint">
           To hide it only for today, edit the dish and untick &ldquo;Available&rdquo; instead.
         </p>
         <div className="mt-5 flex gap-2">
           <button
             onClick={() => deleteMutation.mutate(deleteTarget._id)}
             disabled={deleteMutation.isPending}
-            className="flex-1 rounded-lg bg-red-600 py-3 font-semibold text-white transition hover:bg-red-500 disabled:opacity-50"
+            className="flex-1 rounded-lg bg-danger py-3 font-semibold text-white transition hover:bg-danger/90 disabled:opacity-50"
           >
             {deleteMutation.isPending ? "Deleting..." : "Delete"}
           </button>
           <button
             onClick={() => setDeleteTarget(null)}
-            className="rounded-lg bg-[#2a2a2a] px-5 py-3 font-semibold text-[#ababab]"
+            className="rounded-lg bg-raised px-5 py-3 font-semibold text-muted"
           >
             Cancel
           </button>

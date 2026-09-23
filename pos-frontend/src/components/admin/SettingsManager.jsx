@@ -8,9 +8,9 @@ import { setSettings } from "../../redux/slices/settingsSlice";
 
 const Field = ({ label, hint, children }) => (
   <div>
-    <label className="mb-2 block text-sm font-medium text-[#ababab]">{label}</label>
+    <label className="mb-2 block text-sm font-medium text-muted">{label}</label>
     {children}
-    {hint && <p className="mt-1 text-xs text-[#6b6b6b]">{hint}</p>}
+    {hint && <p className="mt-1 text-xs text-faint">{hint}</p>}
   </div>
 );
 
@@ -35,7 +35,7 @@ const SettingsManager = () => {
   });
 
   const inputClass =
-    "w-full rounded-lg bg-[#1f1f1f] px-4 py-3 text-white outline-none placeholder:text-[#6b6b6b] focus:ring-2 focus:ring-[#f6b100]";
+    "w-full rounded-lg bg-shell px-4 py-3 text-ink outline-none placeholder:text-faint focus:ring-2 focus:ring-terracotta";
 
   return (
     <form
@@ -46,8 +46,8 @@ const SettingsManager = () => {
       className="max-w-2xl space-y-6"
     >
       {/* Receipt header */}
-      <div className="rounded-xl bg-[#1a1a1a] p-5">
-        <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-[#ababab]">
+      <div className="rounded-xl bg-panel p-5">
+        <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-muted">
           What prints on the bill
         </h3>
         <div className="space-y-4">
@@ -90,8 +90,8 @@ const SettingsManager = () => {
       </div>
 
       {/* Pricing labels */}
-      <div className="rounded-xl bg-[#1a1a1a] p-5">
-        <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-[#ababab]">
+      <div className="rounded-xl bg-panel p-5">
+        <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-muted">
           Two-price labels
         </h3>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -114,14 +114,14 @@ const SettingsManager = () => {
             />
           </Field>
         </div>
-        <p className="mt-2 text-xs text-[#6b6b6b]">
+        <p className="mt-2 text-xs text-faint">
           These are the words on the switch the cashier taps and on the printed bill.
         </p>
       </div>
 
       {/* Money */}
-      <div className="rounded-xl bg-[#1a1a1a] p-5">
-        <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-[#ababab]">
+      <div className="rounded-xl bg-panel p-5">
+        <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-muted">
           Money
         </h3>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -171,7 +171,7 @@ const SettingsManager = () => {
       <button
         type="submit"
         disabled={saveMutation.isPending}
-        className="rounded-lg bg-[#f6b100] px-8 py-3 font-bold text-[#1f1f1f] transition hover:bg-[#ffc528] disabled:opacity-50"
+        className="rounded-lg bg-terracotta px-8 py-3 font-bold text-shell transition hover:bg-terracotta-deep disabled:opacity-50"
       >
         {saveMutation.isPending ? "Saving..." : "Save settings"}
       </button>

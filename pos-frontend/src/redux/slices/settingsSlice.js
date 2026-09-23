@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const defaultSettings = {
-  restaurantName: "Virutsha Restaurant",
+  restaurantName: "VISA Tamil Kitchen",
   addressLine: "",
   phone: "",
   currencySymbol: "Rs",

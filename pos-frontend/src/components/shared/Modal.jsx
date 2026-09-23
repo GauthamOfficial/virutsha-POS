@@ -14,15 +14,15 @@ const Modal = ({ isOpen, onClose, title, children, wide = false }) => {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.2, ease: "easeOut" }}
         onClick={(e) => e.stopPropagation()}
-        className={`max-h-[90vh] w-full overflow-y-auto rounded-xl bg-[#1a1a1a] shadow-xl scrollbar-hide ${
+        className={`max-h-[90vh] w-full overflow-y-auto rounded-xl bg-panel shadow-xl scrollbar-hide ${
           wide ? "max-w-3xl" : "max-w-lg"
         }`}
       >
-        <div className="sticky top-0 flex items-center justify-between border-b border-[#333] bg-[#1a1a1a] px-6 py-4">
-          <h2 className="text-lg font-semibold text-[#f5f5f5]">{title}</h2>
+        <div className="sticky top-0 flex items-center justify-between border-b border-line bg-panel px-6 py-4">
+          <h2 className="text-lg font-semibold text-ink">{title}</h2>
           <button
             onClick={onClose}
-            className="text-[#ababab] transition hover:text-red-400"
+            className="text-muted transition hover:text-danger"
             aria-label="Close"
           >
             <IoMdClose size={24} />

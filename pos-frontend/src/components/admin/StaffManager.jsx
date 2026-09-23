@@ -54,28 +54,28 @@ const StaffManager = () => {
   });
 
   const inputClass =
-    "w-full rounded-lg bg-[#1f1f1f] px-4 py-3 text-white outline-none placeholder:text-[#6b6b6b] focus:ring-2 focus:ring-[#f6b100]";
+    "w-full rounded-lg bg-shell px-4 py-3 text-ink outline-none placeholder:text-faint focus:ring-2 focus:ring-terracotta";
 
   return (
     <div>
       <div className="flex items-center justify-between">
-        <p className="text-sm text-[#ababab]">
+        <p className="text-sm text-muted">
           Cashiers can take orders and see bills. Admins can also edit the menu and see reports.
         </p>
         <button
           onClick={() => setAdding(true)}
-          className="flex shrink-0 items-center gap-2 rounded-xl bg-[#f6b100] px-5 py-3 font-bold text-[#1f1f1f] transition hover:bg-[#ffc528]"
+          className="flex shrink-0 items-center gap-2 rounded-xl bg-terracotta px-5 py-3 font-bold text-shell transition hover:bg-terracotta-deep"
         >
           <FaPlus size={14} /> Add Staff
         </button>
       </div>
 
-      <div className="mt-4 overflow-x-auto rounded-xl bg-[#1a1a1a]">
+      <div className="mt-4 overflow-x-auto rounded-xl bg-panel">
         {isLoading ? (
-          <p className="py-10 text-center text-[#ababab]">Loading staff...</p>
+          <p className="py-10 text-center text-muted">Loading staff...</p>
         ) : (
           <table className="w-full min-w-[560px] text-left text-sm">
-            <thead className="bg-[#262626] text-xs uppercase tracking-wide text-[#ababab]">
+            <thead className="bg-raised text-xs uppercase tracking-wide text-muted">
               <tr>
                 <th className="p-3">Name</th>
                 <th className="p-3">Email</th>
@@ -88,17 +88,17 @@ const StaffManager = () => {
               {staff.map((person) => {
                 const isSelf = person._id === currentUserId;
                 return (
-                  <tr key={person._id} className="border-t border-[#2a2a2a]">
+                  <tr key={person._id} className="border-t border-line">
                     <td className="p-3">
                       <div className="flex items-center gap-2">
-                        <FaUserCircle className="text-xl text-[#4a4a4a]" />
-                        <span className="font-semibold text-[#f5f5f5]">
+                        <FaUserCircle className="text-xl text-faint" />
+                        <span className="font-semibold text-ink">
                           {person.name}
-                          {isSelf && <span className="ml-2 text-xs text-[#6b6b6b]">(you)</span>}
+                          {isSelf && <span className="ml-2 text-xs text-faint">(you)</span>}
                         </span>
                       </div>
                     </td>
-                    <td className="p-3 text-[#ababab]">{person.email}</td>
+                    <td className="p-3 text-muted">{person.email}</td>
                     <td className="p-3">
                       <select
                         value={person.role}
@@ -106,7 +106,7 @@ const StaffManager = () => {
                         onChange={(e) =>
                           updateMutation.mutate({ id: person._id, role: e.target.value })
                         }
-                        className="rounded-lg bg-[#262626] px-3 py-1.5 text-[#f5f5f5] outline-none disabled:opacity-50"
+                        className="rounded-lg bg-raised px-3 py-1.5 text-ink outline-none disabled:opacity-50"
                       >
                         <option value="Cashier">Cashier</option>
                         <option value="Admin">Admin</option>
@@ -120,7 +120,7 @@ const StaffManager = () => {
                         onChange={(e) =>
                           updateMutation.mutate({ id: person._id, isActive: e.target.checked })
                         }
-                        className="h-4 w-4 accent-[#f6b100] disabled:opacity-50"
+                        className="h-4 w-4 accent-terracotta disabled:opacity-50"
                       />
                     </td>
                     <td className="p-3 text-right">
@@ -128,7 +128,7 @@ const StaffManager = () => {
                         onClick={() => setDeleteTarget(person)}
                         disabled={isSelf}
                         title={isSelf ? "You cannot remove yourself" : "Remove"}
-                        className="rounded-lg bg-[#262626] p-2 text-[#ababab] transition hover:text-red-400 disabled:opacity-30 disabled:hover:text-[#ababab]"
+                        className="rounded-lg bg-raised p-2 text-muted transition hover:text-danger disabled:opacity-30 disabled:hover:text-muted"
                       >
                         <MdDelete size={16} />
                       </button>
@@ -191,8 +191,8 @@ const StaffManager = () => {
                 onClick={() => setForm({ ...form, role })}
                 className={`rounded-lg px-4 py-3 font-semibold transition ${
                   form.role === role
-                    ? "bg-[#f6b100] text-[#1f1f1f]"
-                    : "bg-[#1f1f1f] text-[#ababab] hover:text-[#f5f5f5]"
+                    ? "bg-terracotta text-shell"
+                    : "bg-shell text-muted hover:text-ink"
                 }`}
               >
                 {role}
@@ -203,7 +203,7 @@ const StaffManager = () => {
           <button
             type="submit"
             disabled={addMutation.isPending}
-            className="w-full rounded-lg bg-[#f6b100] py-3 font-bold text-[#1f1f1f] transition hover:bg-[#ffc528] disabled:opacity-50"
+            className="w-full rounded-lg bg-terracotta py-3 font-bold text-shell transition hover:bg-terracotta-deep disabled:opacity-50"
           >
             {addMutation.isPending ? "Creating..." : "Create account"}
           </button>
@@ -215,21 +215,21 @@ const StaffManager = () => {
         onClose={() => setDeleteTarget(null)}
         title="Remove staff"
       >
-        <p className="text-sm text-[#ababab]">
-          Remove <span className="font-semibold text-[#f5f5f5]">{deleteTarget?.name}</span>? Bills
+        <p className="text-sm text-muted">
+          Remove <span className="font-semibold text-ink">{deleteTarget?.name}</span>? Bills
           they already took stay on record.
         </p>
         <div className="mt-5 flex gap-2">
           <button
             onClick={() => deleteMutation.mutate(deleteTarget._id)}
             disabled={deleteMutation.isPending}
-            className="flex-1 rounded-lg bg-red-600 py-3 font-semibold text-white transition hover:bg-red-500 disabled:opacity-50"
+            className="flex-1 rounded-lg bg-danger py-3 font-semibold text-white transition hover:bg-danger/90 disabled:opacity-50"
           >
             {deleteMutation.isPending ? "Removing..." : "Remove"}
           </button>
           <button
             onClick={() => setDeleteTarget(null)}
-            className="rounded-lg bg-[#2a2a2a] px-5 py-3 font-semibold text-[#ababab]"
+            className="rounded-lg bg-raised px-5 py-3 font-semibold text-muted"
           >
             Cancel
           </button>

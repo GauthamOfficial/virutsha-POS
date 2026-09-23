@@ -1,4 +1,4 @@
-# 🍽️ Virutsha POS
+# 🍽️ VISA Tamil Kitchen — POS
 
 A point-of-sale system for a restaurant that serves both local customers and
 visitors, built on the MERN stack.
@@ -24,6 +24,33 @@ it day to day.
 | 👥 **Roles** | Cashiers take orders; Admins also manage the menu, staff, settings and reports. |
 | ⊘ **Voiding** | A wrong bill is voided, never deleted — it stays on record and drops out of the sales figures. |
 | 🔌 **Offline-capable** | Runs entirely on the laptop with a local database. No internet needed to take an order or print a bill. |
+
+## Brand
+
+Taken from the VISA Tamil Kitchen brand sheet. Defined once in
+[`pos-frontend/tailwind.config.js`](pos-frontend/tailwind.config.js) — no component
+hardcodes a colour.
+
+| Role | Colour | Used for |
+|---|---|---|
+| Deep Terracotta | `#8D2C0D` | Header, primary buttons, the main brand fill |
+| Mustard Gold | `#CA840E` | Active nav, the *Local* price list, accents |
+| Dark Green | `#1B3A20` | The *Foreigner* price list, cash, positive figures |
+| Cream | `#F7E8CB` | The page background — the whole POS reads as warm paper |
+
+Two supporting notes:
+
+- **Charts use lighter steps of the same hues** (`#A8391A`, `#B8770C`, `#00795A`).
+  A fill that works as a button is too dark to read as a data mark on cream. These
+  steps were checked with a contrast/colour-blindness validator and pass on every
+  pair, including for protanopia and deuteranopia.
+- **Every text-on-background pair in the app clears WCAG AA.** The lowest is muted
+  text on cream at 4.73:1.
+
+There is **no logo yet** — the name is set as type in
+[`Wordmark.jsx`](pos-frontend/src/components/shared/Wordmark.jsx). When the real
+logo arrives it drops in beside or instead of that one component, and nothing else
+moves.
 
 ## Tech stack
 

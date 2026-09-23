@@ -2,10 +2,10 @@ import { useMemo, useState } from "react";
 import { formatMoney } from "../../utils";
 
 // One series, so no legend is needed - the heading above the chart names it.
-// This amber sits in the dark-mode lightness band and clears 3:1 against the
-// #1a1a1a card, unlike the brighter #f6b100 used for buttons.
-const SERIES_COLOR = "#b88100";
-const SURFACE = "#1a1a1a";
+// A lighter step of the brand terracotta: the button colour is too dark to
+// read as a data mark on the cream card.
+const SERIES_COLOR = "#A8391A";
+const SURFACE = "#FFFBF2";
 
 // Round the axis top up to a clean number so the ticks read 0 / 5,000 / 10,000.
 const niceCeiling = (value) => {
@@ -38,7 +38,7 @@ const SalesChart = ({ series = [], currency = "Rs" }) => {
       <div className="mb-3 flex justify-end">
         <button
           onClick={() => setShowTable((prev) => !prev)}
-          className="text-xs font-semibold text-[#ababab] underline-offset-2 transition hover:text-[#f5f5f5] hover:underline"
+          className="text-xs font-semibold text-muted underline-offset-2 transition hover:text-ink hover:underline"
         >
           {showTable ? "Show chart" : "Show as table"}
         </button>
@@ -47,7 +47,7 @@ const SalesChart = ({ series = [], currency = "Rs" }) => {
       {showTable ? (
         <div className="max-h-72 overflow-y-auto scrollbar-hide">
           <table className="w-full text-left text-sm">
-            <thead className="sticky top-0 bg-[#1a1a1a] text-xs uppercase tracking-wide text-[#ababab]">
+            <thead className="sticky top-0 bg-panel text-xs uppercase tracking-wide text-muted">
               <tr>
                 <th className="py-2">Period</th>
                 <th className="py-2 text-right">Bills</th>
@@ -56,9 +56,9 @@ const SalesChart = ({ series = [], currency = "Rs" }) => {
             </thead>
             <tbody>
               {series.map((point) => (
-                <tr key={point.key} className="border-t border-[#2a2a2a] text-[#f5f5f5]">
+                <tr key={point.key} className="border-t border-line text-ink">
                   <td className="py-2">{point.label}</td>
-                  <td className="py-2 text-right text-[#ababab]">{point.orders}</td>
+                  <td className="py-2 text-right text-muted">{point.orders}</td>
                   <td className="py-2 text-right font-semibold">
                     {formatMoney(point.revenue, currency)}
                   </td>
@@ -70,7 +70,7 @@ const SalesChart = ({ series = [], currency = "Rs" }) => {
       ) : (
         <div className="flex gap-3">
           {/* Y axis */}
-          <div className="flex h-56 w-16 shrink-0 flex-col justify-between py-0 text-right text-[11px] text-[#6b6b6b]">
+          <div className="flex h-56 w-16 shrink-0 flex-col justify-between py-0 text-right text-[11px] text-faint">
             {[...ticks].reverse().map((tick) => (
               <span key={tick}>{Math.round(tick).toLocaleString("en-LK")}</span>
             ))}
@@ -81,7 +81,7 @@ const SalesChart = ({ series = [], currency = "Rs" }) => {
             {/* Recessive hairline gridlines */}
             <div className="pointer-events-none absolute inset-0 flex h-56 flex-col justify-between">
               {ticks.map((tick) => (
-                <div key={tick} className="h-px w-full bg-[#2f2f2f]" />
+                <div key={tick} className="h-px w-full bg-line" />
               ))}
             </div>
 
@@ -101,7 +101,7 @@ const SalesChart = ({ series = [], currency = "Rs" }) => {
                     {/* Peak gets a direct label; the rest rely on the axis and tooltip. */}
                     {index === peakIndex && point.revenue > 0 && (
                       <span
-                        className="pointer-events-none absolute whitespace-nowrap text-[10px] font-semibold text-[#ababab]"
+                        className="pointer-events-none absolute whitespace-nowrap text-[10px] font-semibold text-muted"
                         style={{ bottom: `calc(${heightPct}% + 4px)` }}
                       >
                         {formatMoney(point.revenue, currency)}
@@ -122,13 +122,12 @@ const SalesChart = ({ series = [], currency = "Rs" }) => {
                     {isHovered && (
                       <div
                         className="pointer-events-none absolute bottom-full z-10 mb-2 whitespace-nowrap rounded-lg px-3 py-2 text-xs shadow-lg"
-                        style={{ backgroundColor: "#2a2a2a", border: `1px solid ${SURFACE}` }}
+                        style={{ backgroundColor: "#2F1B10", border: `2px solid ${SURFACE}` }}
                       >
-                        <p className="font-semibold text-[#f5f5f5]">{point.label}</p>
-                        <p className="text-[#ababab]">
-                          {formatMoney(point.revenue, currency)}
-                        </p>
-                        <p className="text-[#6b6b6b]">
+                        {/* Dark bubble, so its own text is cream rather than ink. */}
+                        <p className="font-semibold text-shell">{point.label}</p>
+                        <p className="text-shell/85">{formatMoney(point.revenue, currency)}</p>
+                        <p className="text-shell/60">
                           {point.orders} bill{point.orders === 1 ? "" : "s"}
                         </p>
                       </div>
@@ -147,7 +146,7 @@ const SalesChart = ({ series = [], currency = "Rs" }) => {
                 return (
                   <span
                     key={point.key}
-                    className="min-w-0 flex-1 truncate text-center text-[10px] text-[#6b6b6b]"
+                    className="min-w-0 flex-1 truncate text-center text-[10px] text-faint"
                   >
                     {show ? point.label : ""}
                   </span>

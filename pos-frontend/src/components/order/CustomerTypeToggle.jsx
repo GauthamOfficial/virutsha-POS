@@ -24,16 +24,18 @@ const CustomerTypeToggle = ({ size = "normal" }) => {
 
   return (
     <div
-      className="inline-flex rounded-xl bg-[#1a1a1a] p-1"
+      className="inline-flex rounded-xl border border-line bg-panel p-1"
       role="group"
       aria-label="Customer pricing type"
     >
       {options.map((option) => {
         const isActive = customerType === option.value;
+        // Mustard for local, dark green for visitors - two brand colours that
+        // stay apart for colour-blind readers, not just two shades of one.
         const activeStyle =
           option.value === "Foreigner"
-            ? "bg-[#025cca] text-white"
-            : "bg-[#f6b100] text-[#1f1f1f]";
+            ? "bg-forest text-shell"
+            : "bg-mustard text-ink";
 
         return (
           <button
@@ -42,7 +44,7 @@ const CustomerTypeToggle = ({ size = "normal" }) => {
             aria-pressed={isActive}
             onClick={() => dispatch(setCustomerType(option.value))}
             className={`flex items-center gap-2 rounded-lg font-bold transition ${padding} ${
-              isActive ? activeStyle : "text-[#ababab] hover:text-[#f5f5f5]"
+              isActive ? activeStyle : "text-muted hover:text-ink"
             }`}
           >
             {option.icon}

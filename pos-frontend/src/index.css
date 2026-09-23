@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -31,7 +31,7 @@
 
   /* Anything focused by keyboard gets a clear ring. */
   :focus-visible {
-    @apply outline-none ring-2 ring-brand ring-offset-2 ring-offset-shell;
+    @apply outline-none ring-2 ring-terracotta ring-offset-2 ring-offset-shell;
   }
 }
 
@@ -43,8 +43,8 @@
 
   .spinner {
     @apply h-12 w-12 rounded-full;
-    border: 4px solid rgba(255, 255, 255, 0.15);
-    border-top-color: #f6b100;
+    border: 4px solid rgba(141, 44, 13, 0.18);
+    border-top-color: #8d2c0d;
     animation: spin 0.9s linear infinite;
   }
 }

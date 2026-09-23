@@ -1,9 +1,9 @@
 @echo off
-title Virutsha POS - First Time Setup
+title VISA Tamil Kitchen POS - First Time Setup
 cd /d "%~dp0"
 
 echo ==========================================================
-echo    VIRUTSHA POS  -  FIRST TIME SETUP
+echo    VISA TAMIL KITCHEN POS  -  FIRST TIME SETUP
 echo ==========================================================
 echo.
 echo  This only needs to be run ONCE on this laptop.
@@ -54,7 +54,7 @@ echo ==========================================================
 echo.
 echo  Now double-click  "Start POS.bat"  to open the system.
 echo.
-echo  Login:     admin@virutsha.lk
+echo  Login:     admin@visatamilkitchen.lk
 echo  Password:  admin123
 echo.
 echo  Please change this password after the first login.

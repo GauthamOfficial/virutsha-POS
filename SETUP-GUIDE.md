@@ -1,4 +1,4 @@
-# Virutsha POS — Setup & Daily Use
+# VISA Tamil Kitchen POS — Setup & Daily Use
 
 This guide has two parts:
 
@@ -45,7 +45,7 @@ login and fills in a starter Sri Lankan menu you can edit later.
 When it finishes it prints the first login:
 
 ```
-Login:     admin@virutsha.lk
+Login:     admin@visatamilkitchen.lk
 Password:  admin123
 ```
 
@@ -77,7 +77,7 @@ that opens.
 
 1. Log in, go to **Manage → Staff**, and create a proper account for your sister
    (make it an **Admin**). Log in as that account and delete or disable the default
-   `admin@virutsha.lk` one.
+   `admin@visatamilkitchen.lk` one.
 2. Go to **Manage → Settings** and fill in the restaurant name, address and phone.
    This is what prints at the top of every bill.
 
@@ -103,7 +103,7 @@ The laptop must be on and the black window open for this to work.
 Everything lives in the MongoDB database on the laptop. To take a copy:
 
 ```
-"C:\Program Files\MongoDB\Server\8.0\bin\mongodump.exe" --db=virutsha-pos --out="D:\pos-backup"
+"C:\Program Files\MongoDB\Server\8.0\bin\mongodump.exe" --db=visa-pos --out="D:\pos-backup"
 ```
 
 (Adjust `8.0` to whatever version folder exists.) Copy that `pos-backup` folder to
@@ -232,5 +232,5 @@ on an ordinary A4 printer too.
 
 **Forgotten the password**
 Another Admin can set a new one from Manage → Staff. If every Admin password is
-lost, delete the `virutsha-pos` database and run `Setup (run once).bat` again —
+lost, delete the `visa-pos` database and run `Setup (run once).bat` again —
 but that erases the sales history, so back it up first.

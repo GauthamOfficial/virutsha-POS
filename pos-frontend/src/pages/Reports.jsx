@@ -16,13 +16,13 @@ const periods = [
   { value: "custom", label: "Custom" },
 ];
 
-const Figure = ({ label, value, hint, accent = "#f5f5f5" }) => (
-  <div className="rounded-xl bg-[#1a1a1a] p-4">
-    <p className="text-xs font-medium uppercase tracking-wide text-[#ababab]">{label}</p>
+const Figure = ({ label, value, hint, accent = "#2F1B10" }) => (
+  <div className="rounded-xl bg-panel p-4">
+    <p className="text-xs font-medium uppercase tracking-wide text-muted">{label}</p>
     <p className="mt-2 text-2xl font-bold" style={{ color: accent }}>
       {value}
     </p>
-    {hint && <p className="mt-1 text-xs text-[#6b6b6b]">{hint}</p>}
+    {hint && <p className="mt-1 text-xs text-faint">{hint}</p>}
   </div>
 );
 
@@ -32,15 +32,15 @@ const SplitRow = ({ label, orders, revenue, total, currency, color }) => {
   return (
     <div className="py-2">
       <div className="flex items-center justify-between text-sm">
-        <span className="font-medium text-[#f5f5f5]">{label}</span>
-        <span className="text-[#ababab]">
+        <span className="font-medium text-ink">{label}</span>
+        <span className="text-muted">
           {orders} bill{orders === 1 ? "" : "s"} ·{" "}
-          <span className="font-semibold text-[#f5f5f5]">
+          <span className="font-semibold text-ink">
             {formatMoney(revenue, currency)}
           </span>
         </span>
       </div>
-      <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-[#2a2a2a]">
+      <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-raised">
         <div
           className="h-full rounded-full transition-all"
           style={{ width: `${share}%`, backgroundColor: color }}
@@ -130,7 +130,7 @@ const Reports = () => {
         <button
           onClick={downloadCsv}
           disabled={!report || totals?.orders === 0}
-          className="flex items-center gap-2 rounded-lg bg-[#1a1a1a] px-4 py-2 text-sm font-semibold text-[#ababab] transition hover:text-[#f5f5f5] disabled:opacity-40"
+          className="flex items-center gap-2 rounded-lg bg-panel px-4 py-2 text-sm font-semibold text-muted transition hover:text-ink disabled:opacity-40"
         >
           <MdFileDownload size={18} /> Export CSV
         </button>
@@ -144,8 +144,8 @@ const Reports = () => {
             onClick={() => setPeriod(option.value)}
             className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${
               period === option.value
-                ? "bg-[#f6b100] text-[#1f1f1f]"
-                : "bg-[#1a1a1a] text-[#ababab] hover:text-[#f5f5f5]"
+                ? "bg-terracotta text-shell"
+                : "bg-panel text-muted hover:text-ink"
             }`}
           >
             {option.label}
@@ -158,14 +158,14 @@ const Reports = () => {
               type="date"
               value={from}
               onChange={(e) => setFrom(e.target.value)}
-              className="rounded-lg bg-[#1a1a1a] px-3 py-2 text-sm text-[#f5f5f5] outline-none [color-scheme:dark]"
+              className="rounded-lg bg-panel px-3 py-2 text-sm text-ink outline-none [color-scheme:dark]"
             />
-            <span className="text-[#ababab]">to</span>
+            <span className="text-muted">to</span>
             <input
               type="date"
               value={to}
               onChange={(e) => setTo(e.target.value)}
-              className="rounded-lg bg-[#1a1a1a] px-3 py-2 text-sm text-[#f5f5f5] outline-none [color-scheme:dark]"
+              className="rounded-lg bg-panel px-3 py-2 text-sm text-ink outline-none [color-scheme:dark]"
             />
           </div>
         )}
@@ -173,7 +173,7 @@ const Reports = () => {
 
       <div className="mt-5 px-4 md:px-8">
         {isLoading || !report ? (
-          <p className="py-10 text-center text-[#ababab]">Working out the figures...</p>
+          <p className="py-10 text-center text-muted">Working out the figures...</p>
         ) : totals.orders === 0 ? (
           <EmptyState
             icon={<MdInsights />}
@@ -188,25 +188,25 @@ const Reports = () => {
                 label="Total income"
                 value={formatMoney(totals.revenue, currency)}
                 hint={report.range.label}
-                accent="#f6b100"
+                accent="#8D2C0D"
               />
               <Figure label="Bills" value={totals.orders} hint={`${totals.itemsSold} items sold`} />
               <Figure
                 label="Average bill"
                 value={formatMoney(totals.averageBill, currency)}
-                accent="#02ca3a"
+                accent="#1B3A20"
               />
               <Figure
                 label="Discounts given"
                 value={formatMoney(totals.discount, currency)}
                 hint={totals.tax > 0 ? `Tax ${formatMoney(totals.tax, currency)}` : undefined}
-                accent="#ff7a7a"
+                accent="#9B1C1C"
               />
             </div>
 
             {/* Trend */}
-            <div className="mt-4 rounded-xl bg-[#1a1a1a] p-4">
-              <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-[#ababab]">
+            <div className="mt-4 rounded-xl bg-panel p-4">
+              <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-muted">
                 Income over time
               </h3>
               <SalesChart series={report.series} currency={currency} />
@@ -214,8 +214,8 @@ const Reports = () => {
 
             {/* Splits */}
             <div className="mt-4 grid gap-3 lg:grid-cols-2">
-              <div className="rounded-xl bg-[#1a1a1a] p-4">
-                <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-[#ababab]">
+              <div className="rounded-xl bg-panel p-4">
+                <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted">
                   Local vs Foreigner
                 </h3>
                 <SplitRow
@@ -223,19 +223,19 @@ const Reports = () => {
                   {...report.byCustomerType.Local}
                   total={totals.revenue}
                   currency={currency}
-                  color="#f6b100"
+                  color="#B8770C"
                 />
                 <SplitRow
                   label="Foreigner"
                   {...report.byCustomerType.Foreigner}
                   total={totals.revenue}
                   currency={currency}
-                  color="#4d9bff"
+                  color="#00795A"
                 />
               </div>
 
-              <div className="rounded-xl bg-[#1a1a1a] p-4">
-                <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-[#ababab]">
+              <div className="rounded-xl bg-panel p-4">
+                <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted">
                   Cash vs Card
                 </h3>
                 <SplitRow
@@ -243,25 +243,25 @@ const Reports = () => {
                   {...report.byPayment.Cash}
                   total={totals.revenue}
                   currency={currency}
-                  color="#02ca3a"
+                  color="#00795A"
                 />
                 <SplitRow
                   label="Card"
                   {...report.byPayment.Card}
                   total={totals.revenue}
                   currency={currency}
-                  color="#025cca"
+                  color="#A8391A"
                 />
               </div>
             </div>
 
             {/* Best sellers */}
-            <div className="mt-4 overflow-hidden rounded-xl bg-[#1a1a1a]">
-              <h3 className="px-4 pb-2 pt-4 text-sm font-semibold uppercase tracking-wide text-[#ababab]">
+            <div className="mt-4 overflow-hidden rounded-xl bg-panel">
+              <h3 className="px-4 pb-2 pt-4 text-sm font-semibold uppercase tracking-wide text-muted">
                 Best selling dishes
               </h3>
               <table className="w-full text-left text-sm">
-                <thead className="bg-[#262626] text-xs uppercase tracking-wide text-[#ababab]">
+                <thead className="bg-raised text-xs uppercase tracking-wide text-muted">
                   <tr>
                     <th className="p-3">Dish</th>
                     <th className="p-3 text-right">Sold</th>
@@ -270,9 +270,9 @@ const Reports = () => {
                 </thead>
                 <tbody>
                   {report.topDishes.map((dish) => (
-                    <tr key={dish.name} className="border-t border-[#2a2a2a] text-[#f5f5f5]">
+                    <tr key={dish.name} className="border-t border-line text-ink">
                       <td className="p-3">{dish.name}</td>
-                      <td className="p-3 text-right text-[#ababab]">{dish.quantity}</td>
+                      <td className="p-3 text-right text-muted">{dish.quantity}</td>
                       <td className="p-3 text-right font-semibold">
                         {formatMoney(dish.revenue, currency)}
                       </td>

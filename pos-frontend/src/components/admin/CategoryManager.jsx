@@ -9,13 +9,13 @@ import Modal from "../shared/Modal";
 import EmptyState from "../shared/EmptyState";
 
 const colorChoices = [
-  "#b73e3e", "#5b45b0", "#7f167f", "#735f32",
-  "#1d2569", "#285430", "#025cca", "#8a5a1f",
+  "#8D2C0D", "#A8391A", "#CA840E", "#8A5A06",
+  "#1B3A20", "#00795A", "#6E2109", "#4A3B1A",
 ];
 
 const iconChoices = ["🍛", "🍚", "🥘", "🍜", "🥟", "🍢", "🍹", "☕", "🍰", "🥗", "🐟", "🍗"];
 
-const emptyForm = { name: "", icon: "🍽️", bgColor: "#5b45b0", sortOrder: 0 };
+const emptyForm = { name: "", icon: "🍽️", bgColor: "#8D2C0D", sortOrder: 0 };
 
 const CategoryManager = () => {
   const queryClient = useQueryClient();
@@ -69,14 +69,14 @@ const CategoryManager = () => {
   });
 
   const inputClass =
-    "w-full rounded-lg bg-[#1f1f1f] px-4 py-3 text-white outline-none placeholder:text-[#6b6b6b] focus:ring-2 focus:ring-[#f6b100]";
+    "w-full rounded-lg bg-shell px-4 py-3 text-ink outline-none placeholder:text-faint focus:ring-2 focus:ring-terracotta";
 
   return (
     <div>
       <div className="flex justify-end">
         <button
           onClick={() => setEditing("new")}
-          className="flex items-center gap-2 rounded-xl bg-[#f6b100] px-5 py-3 font-bold text-[#1f1f1f] transition hover:bg-[#ffc528]"
+          className="flex items-center gap-2 rounded-xl bg-terracotta px-5 py-3 font-bold text-shell transition hover:bg-terracotta-deep"
         >
           <FaPlus size={14} /> Add Category
         </button>
@@ -84,7 +84,7 @@ const CategoryManager = () => {
 
       <div className="mt-4">
         {isLoading ? (
-          <p className="py-10 text-center text-[#ababab]">Loading categories...</p>
+          <p className="py-10 text-center text-muted">Loading categories...</p>
         ) : categories.length === 0 ? (
           <EmptyState
             icon={<MdCategory />}
@@ -93,7 +93,7 @@ const CategoryManager = () => {
             action={
               <button
                 onClick={() => setEditing("new")}
-                className="mt-2 rounded-lg bg-[#f6b100] px-5 py-2.5 font-bold text-[#1f1f1f]"
+                className="mt-2 rounded-lg bg-terracotta px-5 py-2.5 font-bold text-shell"
               >
                 Add the first category
               </button>
@@ -150,7 +150,7 @@ const CategoryManager = () => {
           className="space-y-4"
         >
           <div>
-            <label className="mb-2 block text-sm font-medium text-[#ababab]">Name</label>
+            <label className="mb-2 block text-sm font-medium text-muted">Name</label>
             <input
               type="text"
               value={form.name}
@@ -162,7 +162,7 @@ const CategoryManager = () => {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-[#ababab]">Icon</label>
+            <label className="mb-2 block text-sm font-medium text-muted">Icon</label>
             <div className="flex flex-wrap gap-2">
               {iconChoices.map((icon) => (
                 <button
@@ -170,7 +170,7 @@ const CategoryManager = () => {
                   type="button"
                   onClick={() => setForm({ ...form, icon })}
                   className={`rounded-lg px-3 py-2 text-xl transition ${
-                    form.icon === icon ? "bg-[#f6b100]" : "bg-[#1f1f1f] hover:bg-[#2a2a2a]"
+                    form.icon === icon ? "bg-terracotta" : "bg-shell hover:bg-raised"
                   }`}
                 >
                   {icon}
@@ -180,7 +180,7 @@ const CategoryManager = () => {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-[#ababab]">Colour</label>
+            <label className="mb-2 block text-sm font-medium text-muted">Colour</label>
             <div className="flex flex-wrap gap-2">
               {colorChoices.map((color) => (
                 <button
@@ -190,7 +190,7 @@ const CategoryManager = () => {
                   style={{ backgroundColor: color }}
                   aria-label={`Colour ${color}`}
                   className={`h-9 w-9 rounded-lg transition ${
-                    form.bgColor === color ? "ring-2 ring-white ring-offset-2 ring-offset-[#1a1a1a]" : ""
+                    form.bgColor === color ? "ring-2 ring-white ring-offset-2 ring-offset-panel" : ""
                   }`}
                 />
               ))}
@@ -201,14 +201,14 @@ const CategoryManager = () => {
             <button
               type="submit"
               disabled={saveMutation.isPending}
-              className="flex-1 rounded-lg bg-[#f6b100] py-3 font-bold text-[#1f1f1f] transition hover:bg-[#ffc528] disabled:opacity-50"
+              className="flex-1 rounded-lg bg-terracotta py-3 font-bold text-shell transition hover:bg-terracotta-deep disabled:opacity-50"
             >
               {saveMutation.isPending ? "Saving..." : editing === "new" ? "Add category" : "Save"}
             </button>
             <button
               type="button"
               onClick={() => setEditing(null)}
-              className="rounded-lg bg-[#2a2a2a] px-5 py-3 font-semibold text-[#ababab]"
+              className="rounded-lg bg-raised px-5 py-3 font-semibold text-muted"
             >
               Cancel
             </button>
@@ -221,21 +221,21 @@ const CategoryManager = () => {
         onClose={() => setDeleteTarget(null)}
         title="Delete category"
       >
-        <p className="text-sm text-[#ababab]">
-          Delete <span className="font-semibold text-[#f5f5f5]">{deleteTarget?.name}</span>? A
+        <p className="text-sm text-muted">
+          Delete <span className="font-semibold text-ink">{deleteTarget?.name}</span>? A
           category can only be deleted once it has no dishes in it.
         </p>
         <div className="mt-5 flex gap-2">
           <button
             onClick={() => deleteMutation.mutate(deleteTarget._id)}
             disabled={deleteMutation.isPending}
-            className="flex-1 rounded-lg bg-red-600 py-3 font-semibold text-white transition hover:bg-red-500 disabled:opacity-50"
+            className="flex-1 rounded-lg bg-danger py-3 font-semibold text-white transition hover:bg-danger/90 disabled:opacity-50"
           >
             {deleteMutation.isPending ? "Deleting..." : "Delete"}
           </button>
           <button
             onClick={() => setDeleteTarget(null)}
-            className="rounded-lg bg-[#2a2a2a] px-5 py-3 font-semibold text-[#ababab]"
+            className="rounded-lg bg-raised px-5 py-3 font-semibold text-muted"
           >
             Cancel
           </button>

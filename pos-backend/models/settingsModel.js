@@ -5,7 +5,7 @@ const settingsSchema = new mongoose.Schema(
   {
     key: { type: String, default: "shop", unique: true },
 
-    restaurantName: { type: String, default: "Virutsha Restaurant" },
+    restaurantName: { type: String, default: "VISA Tamil Kitchen" },
     addressLine: { type: String, default: "" },
     phone: { type: String, default: "" },
 

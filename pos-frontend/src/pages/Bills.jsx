@@ -70,7 +70,7 @@ const Bills = () => {
       <PageHeading title="Bills" subtitle="Every bill that has been saved. Tap one to reprint it.">
         <button
           onClick={resetToToday}
-          className="rounded-lg bg-[#1a1a1a] px-4 py-2 text-sm font-semibold text-[#ababab] transition hover:text-[#f5f5f5]"
+          className="rounded-lg bg-panel px-4 py-2 text-sm font-semibold text-muted transition hover:text-ink"
         >
           Today
         </button>
@@ -78,8 +78,8 @@ const Bills = () => {
 
       {/* Filters */}
       <div className="grid gap-3 px-4 md:grid-cols-[2fr_1fr_1fr] md:px-8">
-        <div className="flex items-center gap-3 rounded-xl bg-[#1a1a1a] px-4 py-3">
-          <FaSearch className="text-[#ababab]" />
+        <div className="flex items-center gap-3 rounded-xl bg-panel px-4 py-3">
+          <FaSearch className="text-muted" />
           <input
             type="text"
             value={search}
@@ -88,11 +88,11 @@ const Bills = () => {
               setPage(1);
             }}
             placeholder="Bill number, customer name or phone"
-            className="w-full bg-transparent text-[#f5f5f5] outline-none placeholder:text-[#6b6b6b]"
+            className="w-full bg-transparent text-ink outline-none placeholder:text-faint"
           />
         </div>
 
-        <label className="flex items-center gap-2 rounded-xl bg-[#1a1a1a] px-4 py-3 text-sm text-[#ababab]">
+        <label className="flex items-center gap-2 rounded-xl bg-panel px-4 py-3 text-sm text-muted">
           From
           <input
             type="date"
@@ -101,11 +101,11 @@ const Bills = () => {
               setFrom(e.target.value);
               setPage(1);
             }}
-            className="w-full bg-transparent text-[#f5f5f5] outline-none [color-scheme:dark]"
+            className="w-full bg-transparent text-ink outline-none [color-scheme:dark]"
           />
         </label>
 
-        <label className="flex items-center gap-2 rounded-xl bg-[#1a1a1a] px-4 py-3 text-sm text-[#ababab]">
+        <label className="flex items-center gap-2 rounded-xl bg-panel px-4 py-3 text-sm text-muted">
           To
           <input
             type="date"
@@ -114,7 +114,7 @@ const Bills = () => {
               setTo(e.target.value);
               setPage(1);
             }}
-            className="w-full bg-transparent text-[#f5f5f5] outline-none [color-scheme:dark]"
+            className="w-full bg-transparent text-ink outline-none [color-scheme:dark]"
           />
         </label>
       </div>
@@ -122,7 +122,7 @@ const Bills = () => {
       {/* Results */}
       <div className="mt-4 px-4 md:px-8">
         {isLoading ? (
-          <p className="py-10 text-center text-[#ababab]">Loading bills...</p>
+          <p className="py-10 text-center text-muted">Loading bills...</p>
         ) : orders.length === 0 ? (
           <EmptyState
             icon={<MdReceiptLong />}
@@ -130,9 +130,9 @@ const Bills = () => {
             message="Try widening the date range or clearing the search."
           />
         ) : (
-          <div className="overflow-x-auto rounded-xl bg-[#1a1a1a]">
+          <div className="overflow-x-auto rounded-xl bg-panel">
             <table className="w-full min-w-[640px] text-left text-sm">
-              <thead className="bg-[#262626] text-xs uppercase tracking-wide text-[#ababab]">
+              <thead className="bg-raised text-xs uppercase tracking-wide text-muted">
                 <tr>
                   <th className="p-3">Bill</th>
                   <th className="p-3">Date &amp; time</th>
@@ -148,34 +148,34 @@ const Bills = () => {
                 {orders.map((order) => (
                   <tr
                     key={order._id}
-                    className={`border-t border-[#2a2a2a] transition hover:bg-[#262626] ${
+                    className={`border-t border-line transition hover:bg-raised ${
                       order.isVoided ? "opacity-50" : ""
                     }`}
                   >
-                    <td className="p-3 font-semibold text-[#f5f5f5]">
+                    <td className="p-3 font-semibold text-ink">
                       #{order.invoiceNo}
                       {order.isVoided && (
-                        <span className="ml-2 rounded bg-red-900 px-1.5 py-0.5 text-[10px] font-bold text-red-200">
+                        <span className="ml-2 rounded bg-danger px-1.5 py-0.5 text-[10px] font-bold text-shell">
                           VOID
                         </span>
                       )}
                     </td>
-                    <td className="p-3 text-[#ababab]">{formatDateAndTime(order.createdAt)}</td>
-                    <td className="p-3 text-[#f5f5f5]">{order.customerDetails?.name}</td>
+                    <td className="p-3 text-muted">{formatDateAndTime(order.createdAt)}</td>
+                    <td className="p-3 text-ink">{order.customerDetails?.name}</td>
                     <td className="p-3">
                       <span
                         className={`rounded px-2 py-0.5 text-xs font-semibold ${
                           order.customerType === "Foreigner"
-                            ? "bg-[#12335c] text-[#7fbaff]"
-                            : "bg-[#3d3212] text-[#f6b100]"
+                            ? "bg-forest-soft text-forest"
+                            : "bg-mustard-soft text-mustard-deep"
                         }`}
                       >
                         {order.customerType}
                       </span>
                     </td>
-                    <td className="p-3 text-[#ababab]">{order.items.length}</td>
-                    <td className="p-3 text-[#ababab]">{order.paymentMethod}</td>
-                    <td className="p-3 text-right font-bold text-[#f5f5f5]">
+                    <td className="p-3 text-muted">{order.items.length}</td>
+                    <td className="p-3 text-muted">{order.paymentMethod}</td>
+                    <td className="p-3 text-right font-bold text-ink">
                       {formatMoney(order.bills.total, currency)}
                     </td>
                     <td className="p-3">
@@ -183,7 +183,7 @@ const Bills = () => {
                         <button
                           onClick={() => setViewingOrder(order)}
                           title="View and reprint"
-                          className="rounded-lg bg-[#262626] p-2 text-[#ababab] transition hover:text-[#f5f5f5]"
+                          className="rounded-lg bg-raised p-2 text-muted transition hover:text-ink"
                         >
                           <FaPrint size={14} />
                         </button>
@@ -191,7 +191,7 @@ const Bills = () => {
                           <button
                             onClick={() => setVoidTarget(order)}
                             title="Void this bill"
-                            className="rounded-lg bg-[#262626] p-2 text-[#ababab] transition hover:text-red-400"
+                            className="rounded-lg bg-raised p-2 text-muted transition hover:text-danger"
                           >
                             <FaBan size={14} />
                           </button>
@@ -211,17 +211,17 @@ const Bills = () => {
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page <= 1}
-              className="rounded-lg bg-[#1a1a1a] px-4 py-2 text-sm text-[#ababab] disabled:opacity-40"
+              className="rounded-lg bg-panel px-4 py-2 text-sm text-muted disabled:opacity-40"
             >
               Previous
             </button>
-            <span className="text-sm text-[#ababab]">
+            <span className="text-sm text-muted">
               Page {meta.page} of {meta.pages}
             </span>
             <button
               onClick={() => setPage((p) => Math.min(meta.pages, p + 1))}
               disabled={page >= meta.pages}
-              className="rounded-lg bg-[#1a1a1a] px-4 py-2 text-sm text-[#ababab] disabled:opacity-40"
+              className="rounded-lg bg-panel px-4 py-2 text-sm text-muted disabled:opacity-40"
             >
               Next
             </button>
@@ -236,7 +236,7 @@ const Bills = () => {
         onClose={() => setVoidTarget(null)}
         title={`Void bill #${voidTarget?.invoiceNo}`}
       >
-        <p className="text-sm text-[#ababab]">
+        <p className="text-sm text-muted">
           The bill stays on record but stops counting towards sales. This cannot be undone.
         </p>
         <input
@@ -244,19 +244,19 @@ const Bills = () => {
           value={voidReason}
           onChange={(e) => setVoidReason(e.target.value)}
           placeholder="Reason (optional)"
-          className="mt-4 w-full rounded-lg bg-[#1f1f1f] px-4 py-3 text-white outline-none placeholder:text-[#6b6b6b]"
+          className="mt-4 w-full rounded-lg bg-shell px-4 py-3 text-ink outline-none placeholder:text-faint"
         />
         <div className="mt-5 flex gap-2">
           <button
             onClick={() => voidMutation.mutate({ id: voidTarget._id, reason: voidReason })}
             disabled={voidMutation.isPending}
-            className="flex-1 rounded-lg bg-red-600 py-3 font-semibold text-white transition hover:bg-red-500 disabled:opacity-50"
+            className="flex-1 rounded-lg bg-danger py-3 font-semibold text-white transition hover:bg-danger/90 disabled:opacity-50"
           >
             {voidMutation.isPending ? "Voiding..." : "Void bill"}
           </button>
           <button
             onClick={() => setVoidTarget(null)}
-            className="rounded-lg bg-[#2a2a2a] px-5 py-3 font-semibold text-[#ababab]"
+            className="rounded-lg bg-raised px-5 py-3 font-semibold text-muted"
           >
             Cancel
           </button>

@@ -95,17 +95,17 @@ const CartPanel = () => {
 
   return (
     <>
-      <aside className="flex h-full flex-col rounded-xl bg-[#1a1a1a]">
+      <aside className="flex h-full flex-col rounded-xl bg-panel">
         {/* Pricing switch - kept at the top of the bill so it is impossible to miss */}
-        <div className="border-b border-[#2a2a2a] p-4">
+        <div className="border-b border-line p-4">
           <div className="mb-2 flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wide text-[#ababab]">
+            <span className="text-xs font-semibold uppercase tracking-wide text-muted">
               Pricing
             </span>
             {items.length > 0 && (
               <button
                 onClick={handleClear}
-                className="flex items-center gap-1 text-xs text-[#ababab] transition hover:text-red-400"
+                className="flex items-center gap-1 text-xs text-muted transition hover:text-danger"
               >
                 <FaTrash size={10} /> Clear
               </button>
@@ -117,7 +117,7 @@ const CartPanel = () => {
         {/* Items */}
         <div className="flex-1 overflow-y-auto p-4 scrollbar-hide">
           {items.length === 0 ? (
-            <p className="flex h-full min-h-[120px] items-center justify-center text-center text-sm text-[#6b6b6b]">
+            <p className="flex h-full min-h-[120px] items-center justify-center text-center text-sm text-faint">
               Tap a dish to start the bill.
             </p>
           ) : (
@@ -125,15 +125,15 @@ const CartPanel = () => {
               {items.map((item) => {
                 const unitPrice = unitPriceFor(item, customer.customerType);
                 return (
-                  <li key={item.dishId} className="rounded-lg bg-[#1f1f1f] p-3">
+                  <li key={item.dishId} className="rounded-lg bg-shell p-3">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <p className="text-sm font-semibold text-[#f5f5f5]">{item.name}</p>
-                        <p className="text-xs text-[#ababab]">
+                        <p className="text-sm font-semibold text-ink">{item.name}</p>
+                        <p className="text-xs text-muted">
                           {formatMoney(unitPrice, currency)} each
                         </p>
                       </div>
-                      <p className="whitespace-nowrap text-sm font-bold text-[#f5f5f5]">
+                      <p className="whitespace-nowrap text-sm font-bold text-ink">
                         {formatMoney(unitPrice * item.quantity, currency)}
                       </p>
                     </div>
@@ -141,26 +141,26 @@ const CartPanel = () => {
                     <div className="mt-3 flex items-center justify-between">
                       <button
                         onClick={() => dispatch(removeItem(item.dishId))}
-                        className="text-[#ababab] transition hover:text-red-400"
+                        className="text-muted transition hover:text-danger"
                         aria-label={`Remove ${item.name}`}
                       >
                         <RiDeleteBin2Fill size={18} />
                       </button>
 
-                      <div className="flex items-center gap-4 rounded-lg bg-[#2a2a2a] px-3 py-1">
+                      <div className="flex items-center gap-4 rounded-lg bg-raised px-3 py-1">
                         <button
                           onClick={() => dispatch(decreaseQuantity(item.dishId))}
-                          className="text-xl font-bold text-[#f6b100]"
+                          className="text-xl font-bold text-mustard-deep"
                           aria-label="Decrease quantity"
                         >
                           &minus;
                         </button>
-                        <span className="min-w-[1.5rem] text-center font-semibold text-white">
+                        <span className="min-w-[1.5rem] text-center font-semibold text-ink">
                           {item.quantity}
                         </span>
                         <button
                           onClick={() => dispatch(increaseQuantity(item.dishId))}
-                          className="text-xl font-bold text-[#f6b100]"
+                          className="text-xl font-bold text-mustard-deep"
                           aria-label="Increase quantity"
                         >
                           &#43;
@@ -175,10 +175,10 @@ const CartPanel = () => {
         </div>
 
         {/* Optional customer details */}
-        <div className="border-t border-[#2a2a2a] px-4 py-2">
+        <div className="border-t border-line px-4 py-2">
           <button
             onClick={() => setShowDetails((prev) => !prev)}
-            className="w-full text-left text-xs font-semibold text-[#ababab] transition hover:text-[#f5f5f5]"
+            className="w-full text-left text-xs font-semibold text-muted transition hover:text-ink"
           >
             {showDetails ? "− Hide" : "+ Add"} customer name / discount (optional)
           </button>
@@ -190,24 +190,24 @@ const CartPanel = () => {
                 value={customer.name}
                 onChange={(e) => dispatch(setCustomerDetails({ name: e.target.value }))}
                 placeholder="Customer name"
-                className="w-full rounded-lg bg-[#1f1f1f] px-3 py-2 text-sm text-white outline-none placeholder:text-[#6b6b6b]"
+                className="w-full rounded-lg bg-shell px-3 py-2 text-sm text-ink outline-none placeholder:text-faint"
               />
               <input
                 type="tel"
                 value={customer.phone}
                 onChange={(e) => dispatch(setCustomerDetails({ phone: e.target.value }))}
                 placeholder="Phone (optional)"
-                className="w-full rounded-lg bg-[#1f1f1f] px-3 py-2 text-sm text-white outline-none placeholder:text-[#6b6b6b]"
+                className="w-full rounded-lg bg-shell px-3 py-2 text-sm text-ink outline-none placeholder:text-faint"
               />
               <div className="flex items-center gap-2">
-                <label className="shrink-0 text-xs text-[#ababab]">Discount</label>
+                <label className="shrink-0 text-xs text-muted">Discount</label>
                 <input
                   type="number"
                   min="0"
                   value={typedDiscount || ""}
                   onChange={(e) => dispatch(setDiscount(e.target.value))}
                   placeholder="0"
-                  className="w-full rounded-lg bg-[#1f1f1f] px-3 py-2 text-sm text-white outline-none placeholder:text-[#6b6b6b]"
+                  className="w-full rounded-lg bg-shell px-3 py-2 text-sm text-ink outline-none placeholder:text-faint"
                 />
               </div>
             </div>
@@ -215,22 +215,22 @@ const CartPanel = () => {
         </div>
 
         {/* Totals */}
-        <div className="border-t border-[#2a2a2a] p-4">
+        <div className="border-t border-line p-4">
           <div className="space-y-1 text-sm">
-            <div className="flex justify-between text-[#ababab]">
+            <div className="flex justify-between text-muted">
               <span>Subtotal</span>
               <span>{formatMoney(bill.subtotal, currency)}</span>
             </div>
 
             {bill.discount > 0 && (
-              <div className="flex justify-between text-[#02ca3a]">
+              <div className="flex justify-between text-forest">
                 <span>Discount</span>
                 <span>− {formatMoney(bill.discount, currency)}</span>
               </div>
             )}
 
             {bill.taxRate > 0 && (
-              <div className="flex justify-between text-[#ababab]">
+              <div className="flex justify-between text-muted">
                 <span>
                   {settings.taxLabel} ({bill.taxRate}%)
                 </span>
@@ -238,7 +238,7 @@ const CartPanel = () => {
               </div>
             )}
 
-            <div className="flex justify-between border-t border-[#2a2a2a] pt-2 text-lg font-bold text-[#f5f5f5]">
+            <div className="flex justify-between border-t border-line pt-2 text-lg font-bold text-ink">
               <span>Total</span>
               <span>{formatMoney(bill.total, currency)}</span>
             </div>
@@ -250,8 +250,8 @@ const CartPanel = () => {
               onClick={() => setPaymentMethod("Cash")}
               className={`flex items-center justify-center gap-2 rounded-lg px-3 py-3 text-sm font-semibold transition ${
                 paymentMethod === "Cash"
-                  ? "bg-[#02ca3a] text-[#0d2a13]"
-                  : "bg-[#1f1f1f] text-[#ababab] hover:text-[#f5f5f5]"
+                  ? "bg-forest text-shell"
+                  : "bg-shell text-muted hover:text-ink"
               }`}
             >
               <FaMoneyBillWave /> Cash
@@ -260,8 +260,8 @@ const CartPanel = () => {
               onClick={() => setPaymentMethod("Card")}
               className={`flex items-center justify-center gap-2 rounded-lg px-3 py-3 text-sm font-semibold transition ${
                 paymentMethod === "Card"
-                  ? "bg-[#025cca] text-white"
-                  : "bg-[#1f1f1f] text-[#ababab] hover:text-[#f5f5f5]"
+                  ? "bg-terracotta text-shell"
+                  : "bg-shell text-muted hover:text-ink"
               }`}
             >
               <FaCreditCard /> Card
@@ -277,11 +277,11 @@ const CartPanel = () => {
                 value={cashReceived}
                 onChange={(e) => setCashReceived(e.target.value)}
                 placeholder="Cash received"
-                className="w-full rounded-lg bg-[#1f1f1f] px-3 py-2 text-sm text-white outline-none placeholder:text-[#6b6b6b]"
+                className="w-full rounded-lg bg-shell px-3 py-2 text-sm text-ink outline-none placeholder:text-faint"
               />
               <div className="whitespace-nowrap text-sm">
-                <span className="text-[#ababab]">Change </span>
-                <span className="font-bold text-[#f6b100]">
+                <span className="text-muted">Change </span>
+                <span className="font-bold text-mustard-deep">
                   {formatMoney(changeDue, currency)}
                 </span>
               </div>
@@ -291,7 +291,7 @@ const CartPanel = () => {
           <button
             onClick={handleSaveBill}
             disabled={items.length === 0 || orderMutation.isPending}
-            className="mt-4 w-full rounded-lg bg-[#f6b100] py-3 text-lg font-bold text-[#1f1f1f] transition hover:bg-[#ffc528] disabled:cursor-not-allowed disabled:bg-[#3a3a3a] disabled:text-[#6b6b6b]"
+            className="mt-4 w-full rounded-lg bg-terracotta py-3 text-lg font-bold text-shell transition hover:bg-terracotta-deep disabled:cursor-not-allowed disabled:bg-line disabled:text-faint"
           >
             {orderMutation.isPending
               ? "Saving..."

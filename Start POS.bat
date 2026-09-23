@@ -1,9 +1,9 @@
 @echo off
-title Virutsha POS - KEEP THIS WINDOW OPEN
+title VISA Tamil Kitchen POS - KEEP THIS WINDOW OPEN
 cd /d "%~dp0pos-backend"
 
 echo ==========================================================
-echo    VIRUTSHA POS
+echo    VISA TAMIL KITCHEN POS
 echo ==========================================================
 echo.
 echo  The system is starting. Your browser will open shortly.

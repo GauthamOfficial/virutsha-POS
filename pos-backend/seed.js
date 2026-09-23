@@ -15,43 +15,55 @@ const { getSettings } = require("./models/settingsModel");
 
 const starterMenu = [
   {
-    category: { name: "Rice & Curry", icon: "🍛", bgColor: "#b73e3e", sortOrder: 1 },
+    category: { name: 'Biriyani', icon: '🍛', bgColor: '#8D2C0D', sortOrder: 1 },
     dishes: [
-      { name: "Rice & Curry (Veg)", priceLocal: 350, priceForeign: 900 },
-      { name: "Rice & Curry (Chicken)", priceLocal: 550, priceForeign: 1400 },
-      { name: "Rice & Curry (Fish)", priceLocal: 600, priceForeign: 1500 },
+      { name: 'Chicken Biriyani', priceLocal: 750, priceForeign: 1800 },
+      { name: 'Mutton Biriyani', priceLocal: 950, priceForeign: 2200 },
+      { name: 'Vegetable Biriyani', priceLocal: 550, priceForeign: 1300 },
+      { name: 'Egg Biriyani', priceLocal: 600, priceForeign: 1450 },
     ],
   },
   {
-    category: { name: "Kottu & Rotti", icon: "🥘", bgColor: "#5b45b0", sortOrder: 2 },
+    category: { name: 'Dosa', icon: '🥞', bgColor: '#A8391A', sortOrder: 2 },
     dishes: [
-      { name: "Vegetable Kottu", priceLocal: 450, priceForeign: 1100 },
-      { name: "Chicken Kottu", priceLocal: 700, priceForeign: 1700 },
-      { name: "Egg Rotti", priceLocal: 200, priceForeign: 500 },
+      { name: 'Plain Dosa', priceLocal: 250, priceForeign: 600 },
+      { name: 'Masala Dosa', priceLocal: 400, priceForeign: 950 },
+      { name: 'Ghee Roast Dosa', priceLocal: 450, priceForeign: 1100 },
+      { name: 'Onion Rava Dosa', priceLocal: 420, priceForeign: 1000 },
     ],
   },
   {
-    category: { name: "Short Eats", icon: "🥟", bgColor: "#735f32", sortOrder: 3 },
+    category: { name: 'Idli & Vadai', icon: '🍚', bgColor: '#CA840E', sortOrder: 3 },
     dishes: [
-      { name: "Fish Bun", priceLocal: 120, priceForeign: 300 },
-      { name: "Vegetable Roti", priceLocal: 100, priceForeign: 250 },
-      { name: "Samosa", priceLocal: 90, priceForeign: 220 },
+      { name: 'Idli (2 pcs)', priceLocal: 180, priceForeign: 450 },
+      { name: 'Sambar Vadai', priceLocal: 200, priceForeign: 500 },
+      { name: 'Ven Pongal', priceLocal: 320, priceForeign: 780 },
     ],
   },
   {
-    category: { name: "Beverages", icon: "🍹", bgColor: "#7f167f", sortOrder: 4 },
+    category: { name: 'Meals', icon: '🍽️', bgColor: '#1B3A20', sortOrder: 4 },
     dishes: [
-      { name: "Plain Tea", priceLocal: 80, priceForeign: 200 },
-      { name: "Milk Tea", priceLocal: 120, priceForeign: 300 },
-      { name: "King Coconut", priceLocal: 150, priceForeign: 400 },
-      { name: "Fresh Lime Juice", priceLocal: 250, priceForeign: 650 },
+      { name: 'Vegetarian Meals', priceLocal: 450, priceForeign: 1100 },
+      { name: 'Chicken Meals', priceLocal: 700, priceForeign: 1700 },
+      { name: 'Fish Meals', priceLocal: 750, priceForeign: 1800 },
     ],
   },
   {
-    category: { name: "Desserts", icon: "🍰", bgColor: "#1d2569", sortOrder: 5 },
+    category: { name: 'Chai & Drinks', icon: '☕', bgColor: '#00795A', sortOrder: 5 },
     dishes: [
-      { name: "Watalappan", priceLocal: 300, priceForeign: 750 },
-      { name: "Curd & Treacle", priceLocal: 350, priceForeign: 850 },
+      { name: 'Masala Chai', priceLocal: 120, priceForeign: 300 },
+      { name: 'Plain Tea', priceLocal: 80, priceForeign: 200 },
+      { name: 'Filter Coffee', priceLocal: 150, priceForeign: 380 },
+      { name: 'Fresh Lime Juice', priceLocal: 250, priceForeign: 620 },
+      { name: 'King Coconut', priceLocal: 150, priceForeign: 400 },
+    ],
+  },
+  {
+    category: { name: 'Sweets', icon: '🍮', bgColor: '#8A5A06', sortOrder: 6 },
+    dishes: [
+      { name: 'Payasam', priceLocal: 280, priceForeign: 680 },
+      { name: 'Gulab Jamun (2 pcs)', priceLocal: 250, priceForeign: 600 },
+      { name: 'Watalappan', priceLocal: 300, priceForeign: 750 },
     ],
   },
 ];

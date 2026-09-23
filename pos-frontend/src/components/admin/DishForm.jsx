@@ -93,8 +93,8 @@ const DishForm = ({ dish, categories, onDone }) => {
   };
 
   const inputClass =
-    "w-full rounded-lg bg-[#1f1f1f] px-4 py-3 text-white outline-none placeholder:text-[#6b6b6b] focus:ring-2 focus:ring-[#f6b100]";
-  const labelClass = "mb-2 block text-sm font-medium text-[#ababab]";
+    "w-full rounded-lg bg-shell px-4 py-3 text-ink outline-none placeholder:text-faint focus:ring-2 focus:ring-terracotta";
+  const labelClass = "mb-2 block text-sm font-medium text-muted";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -102,11 +102,11 @@ const DishForm = ({ dish, categories, onDone }) => {
       <div>
         <span className={labelClass}>Photo (optional)</span>
         <div className="flex items-center gap-4">
-          <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-[#1f1f1f]">
+          <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-shell">
             {form.image ? (
               <img src={form.image} alt="Dish" className="h-full w-full object-cover" />
             ) : (
-              <BiSolidDish className="text-3xl text-[#4a4a4a]" />
+              <BiSolidDish className="text-3xl text-faint" />
             )}
           </div>
 
@@ -115,7 +115,7 @@ const DishForm = ({ dish, categories, onDone }) => {
               type="button"
               onClick={() => fileRef.current?.click()}
               disabled={imageBusy}
-              className="flex items-center gap-2 rounded-lg bg-[#2a2a2a] px-4 py-2 text-sm font-semibold text-[#f5f5f5] transition hover:bg-[#333] disabled:opacity-50"
+              className="flex items-center gap-2 rounded-lg bg-raised px-4 py-2 text-sm font-semibold text-ink transition hover:bg-raised disabled:opacity-50"
             >
               <MdPhotoCamera size={18} />
               {imageBusy ? "Processing..." : form.image ? "Change photo" : "Choose photo"}
@@ -125,7 +125,7 @@ const DishForm = ({ dish, categories, onDone }) => {
               <button
                 type="button"
                 onClick={() => setField("image", "")}
-                className="flex items-center gap-2 text-sm text-[#ababab] transition hover:text-red-400"
+                className="flex items-center gap-2 text-sm text-muted transition hover:text-danger"
               >
                 <MdDelete size={16} /> Remove photo
               </button>
@@ -172,11 +172,11 @@ const DishForm = ({ dish, categories, onDone }) => {
       </div>
 
       {/* The two prices */}
-      <div className="rounded-lg border border-[#2a2a2a] p-4">
-        <p className="mb-3 text-sm font-semibold text-[#f5f5f5]">Prices ({currency})</p>
+      <div className="rounded-lg border border-line p-4">
+        <p className="mb-3 text-sm font-semibold text-ink">Prices ({currency})</p>
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="mb-2 block text-xs font-medium text-[#f6b100]">
+            <label className="mb-2 block text-xs font-medium text-mustard-deep">
               {localLabel || "Local"} price
             </label>
             <input
@@ -191,7 +191,7 @@ const DishForm = ({ dish, categories, onDone }) => {
             />
           </div>
           <div>
-            <label className="mb-2 block text-xs font-medium text-[#7fbaff]">
+            <label className="mb-2 block text-xs font-medium text-forest">
               {foreignLabel || "Foreigner"} price
             </label>
             <input
@@ -206,7 +206,7 @@ const DishForm = ({ dish, categories, onDone }) => {
             />
           </div>
         </div>
-        <p className="mt-2 text-xs text-[#6b6b6b]">
+        <p className="mt-2 text-xs text-faint">
           The cashier switches between these two with one tap while taking the order.
         </p>
       </div>
@@ -222,12 +222,12 @@ const DishForm = ({ dish, categories, onDone }) => {
         />
       </div>
 
-      <label className="flex cursor-pointer items-center gap-3 text-sm text-[#ababab]">
+      <label className="flex cursor-pointer items-center gap-3 text-sm text-muted">
         <input
           type="checkbox"
           checked={form.isAvailable}
           onChange={(e) => setField("isAvailable", e.target.checked)}
-          className="h-4 w-4 accent-[#f6b100]"
+          className="h-4 w-4 accent-terracotta"
         />
         Available today (unavailable dishes are hidden from the order screen)
       </label>
@@ -236,14 +236,14 @@ const DishForm = ({ dish, categories, onDone }) => {
         <button
           type="submit"
           disabled={saveMutation.isPending}
-          className="flex-1 rounded-lg bg-[#f6b100] py-3 font-bold text-[#1f1f1f] transition hover:bg-[#ffc528] disabled:opacity-50"
+          className="flex-1 rounded-lg bg-terracotta py-3 font-bold text-shell transition hover:bg-terracotta-deep disabled:opacity-50"
         >
           {saveMutation.isPending ? "Saving..." : dish ? "Save changes" : "Add dish"}
         </button>
         <button
           type="button"
           onClick={onDone}
-          className="rounded-lg bg-[#2a2a2a] px-5 py-3 font-semibold text-[#ababab] transition hover:text-[#f5f5f5]"
+          className="rounded-lg bg-raised px-5 py-3 font-semibold text-muted transition hover:text-ink"
         >
           Cancel
         </button>
