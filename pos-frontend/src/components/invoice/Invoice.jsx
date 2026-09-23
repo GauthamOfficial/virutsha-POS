@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { FaCheck, FaPrint } from "react-icons/fa6";
-import { formatMoney, formatDateAndTime } from "../../utils";
+import { formatMoney, formatDateAndTime, paymentLabel } from "../../utils";
 
 /**
  * The printable bill. Laid out for an 80mm thermal roll, but it prints fine on
@@ -186,7 +186,7 @@ const Invoice = ({ order, onClose }) => {
 
               <tr>
                 <td>Paid by</td>
-                <td className="right text-right">{order.paymentMethod}</td>
+                <td className="right text-right">{paymentLabel(order.paymentMethod)}</td>
               </tr>
 
               {order.paymentMethod === "Cash" && order.changeGiven > 0 && (

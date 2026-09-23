@@ -6,7 +6,7 @@ import { FaSearch, FaPrint, FaBan } from "react-icons/fa";
 import { MdReceiptLong } from "react-icons/md";
 import { getOrders, voidOrder } from "../https";
 import { errorMessage } from "../https/axiosWrapper";
-import { formatMoney, formatDateAndTime, todayISO } from "../utils";
+import { formatMoney, formatDateAndTime, todayISO, paymentLabel } from "../utils";
 import PageHeading from "../components/shared/PageHeading";
 import EmptyState from "../components/shared/EmptyState";
 import Invoice from "../components/invoice/Invoice";
@@ -174,7 +174,7 @@ const Bills = () => {
                       </span>
                     </td>
                     <td className="p-3 text-muted">{order.items.length}</td>
-                    <td className="p-3 text-muted">{order.paymentMethod}</td>
+                    <td className="p-3 text-muted">{paymentLabel(order.paymentMethod)}</td>
                     <td className="p-3 text-right font-bold text-ink">
                       {formatMoney(order.bills.total, currency)}
                     </td>

@@ -64,7 +64,11 @@ const summarise = (orders) => {
     revenue: 0,
   };
 
-  const byPayment = { Cash: { orders: 0, revenue: 0 }, Card: { orders: 0, revenue: 0 } };
+  const byPayment = {
+    Cash: { orders: 0, revenue: 0 },
+    Card: { orders: 0, revenue: 0 },
+    QR: { orders: 0, revenue: 0 },
+  };
   const byCustomerType = {
     Local: { orders: 0, revenue: 0 },
     Foreigner: { orders: 0, revenue: 0 },

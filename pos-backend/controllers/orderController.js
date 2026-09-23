@@ -78,7 +78,8 @@ const addOrder = async (req, res, next) => {
     } = req.body;
 
     const type = customerType === "Foreigner" ? "Foreigner" : "Local";
-    const method = paymentMethod === "Card" ? "Card" : "Cash";
+    // Anything unrecognised falls back to Cash rather than being rejected.
+    const method = ["Card", "QR"].includes(paymentMethod) ? paymentMethod : "Cash";
 
     const { items: lineItems, bills } = await buildBill({
       items,

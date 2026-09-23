@@ -129,7 +129,7 @@ in Excel.
    menu and the whole bill change with it.
 3. Tap dishes to add them. Tap the same dish again to add another one.
 4. Adjust quantities with − and + in the bill on the right.
-5. Choose **Cash** or **Card**.
+5. Choose **Cash**, **Card** or **QR Scan**.
    - For cash, typing what the customer handed over shows the change to give back.
 6. Click **Save Bill**.
 7. The bill appears on screen. Click **Print Bill**, or **Done** if they don't want
@@ -188,7 +188,7 @@ custom date range:
 - average bill value
 - a bar chart of income over the period
 - **how much came from Local vs Foreigner customers**
-- how much came in as cash vs card
+- how much came in by cash, card and QR scan
 - the best selling dishes
 - **Export CSV** to open the whole thing in Excel
 

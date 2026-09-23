@@ -102,4 +102,9 @@ export const compressImage = (file, { maxSize = 600, quality = 0.75 } = {}) =>
     reader.readAsDataURL(file);
   });
 
+// Stored payment values are short codes; this is how they read to a person.
+const paymentLabels = { Cash: "Cash", Card: "Card", QR: "QR Scan" };
+
+export const paymentLabel = (method) => paymentLabels[method] || method || "";
+
 export const todayISO = () => new Date().toISOString().slice(0, 10);

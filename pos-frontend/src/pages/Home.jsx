@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { MdPointOfSale, MdReceiptLong, MdInsights } from "react-icons/md";
 import { BsCashCoin } from "react-icons/bs";
 import { getOverview } from "../https";
-import { formatMoney, formatTime, greetingFor } from "../utils";
+import { formatMoney, formatTime, greetingFor, paymentLabel } from "../utils";
 import EmptyState from "../components/shared/EmptyState";
 import Invoice from "../components/invoice/Invoice";
 
@@ -175,7 +175,7 @@ const Home = () => {
                     </span>
                   </td>
                   <td className="hidden p-3 text-muted sm:table-cell">
-                    {order.paymentMethod}
+                    {paymentLabel(order.paymentMethod)}
                   </td>
                   <td className="p-3 text-right font-bold">
                     {formatMoney(order.bills.total, currency)}

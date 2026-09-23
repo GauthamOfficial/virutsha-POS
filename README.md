@@ -19,8 +19,8 @@ it day to day.
 | 💱 **Dual pricing** | Local / Foreigner switch that re-prices the whole cart live. The choice is remembered between orders and printed on the bill. The two labels are editable. |
 | 🍛 **Menu management** | Categories and dishes with a photo and both prices. Photos are shrunk in the browser and stored in the database, so there is no file server to run. |
 | 🧾 **Billing & invoicing** | Sequential bill numbers, an 80mm thermal-printer receipt that also prints on A4, and reprinting of any past bill. |
-| 📊 **Sales reports** | Daily, weekly, monthly, yearly or a custom range — income, bill count, average bill, income over time, Local vs Foreigner split, cash vs card split, best sellers, and CSV export. |
-| 💵 **Cash & card** | Cash with a change calculator, or card through the shop's own machine. No payment gateway. |
+| 📊 **Sales reports** | Daily, weekly, monthly, yearly or a custom range — income, bill count, average bill, income over time, Local vs Foreigner split, payment-method split, best sellers, and CSV export. |
+| 💵 **Cash, card & QR** | Cash with a change calculator, card through the shop's own machine, or a QR scan. No payment gateway. |
 | 👥 **Roles** | Cashiers take orders; Admins also manage the menu, staff, settings and reports. |
 | ⊘ **Voiding** | A wrong bill is voided, never deleted — it stays on record and drops out of the sales figures. |
 | 🔌 **Offline-capable** | Runs entirely on the laptop with a local database. No internet needed to take an order or print a bill. |

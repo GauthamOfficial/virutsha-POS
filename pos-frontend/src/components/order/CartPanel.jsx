@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
 import { RiDeleteBin2Fill } from "react-icons/ri";
-import { FaMoneyBillWave, FaCreditCard, FaTrash } from "react-icons/fa";
+import { FaMoneyBillWave, FaCreditCard, FaTrash, FaQrcode } from "react-icons/fa";
 import {
   clearCart,
   decreaseQuantity,
@@ -20,6 +20,29 @@ import { errorMessage } from "../../https/axiosWrapper";
 import { formatMoney } from "../../utils";
 import CustomerTypeToggle from "./CustomerTypeToggle";
 import Invoice from "../invoice/Invoice";
+
+// The three ways the shop takes money. Each keeps its own colour so the
+// same colour means the same thing on the reports.
+const paymentMethods = [
+  {
+    value: "Cash",
+    label: "Cash",
+    icon: <FaMoneyBillWave size={18} />,
+    activeClass: "bg-forest",
+  },
+  {
+    value: "Card",
+    label: "Card",
+    icon: <FaCreditCard size={18} />,
+    activeClass: "bg-terracotta",
+  },
+  {
+    value: "QR",
+    label: "QR Scan",
+    icon: <FaQrcode size={18} />,
+    activeClass: "bg-mustard-deep",
+  },
+];
 
 const CartPanel = () => {
   const dispatch = useDispatch();
@@ -244,28 +267,26 @@ const CartPanel = () => {
             </div>
           </div>
 
-          {/* Payment method - cash drawer or the card machine */}
-          <div className="mt-4 grid grid-cols-2 gap-2">
-            <button
-              onClick={() => setPaymentMethod("Cash")}
-              className={`flex items-center justify-center gap-2 rounded-lg px-3 py-3 text-sm font-semibold transition ${
-                paymentMethod === "Cash"
-                  ? "bg-forest text-shell"
-                  : "bg-shell text-muted hover:text-ink"
-              }`}
-            >
-              <FaMoneyBillWave /> Cash
-            </button>
-            <button
-              onClick={() => setPaymentMethod("Card")}
-              className={`flex items-center justify-center gap-2 rounded-lg px-3 py-3 text-sm font-semibold transition ${
-                paymentMethod === "Card"
-                  ? "bg-terracotta text-shell"
-                  : "bg-shell text-muted hover:text-ink"
-              }`}
-            >
-              <FaCreditCard /> Card
-            </button>
+          {/* How they paid: the cash drawer, the card machine, or a QR scan */}
+          <div className="mt-4 grid grid-cols-3 gap-2">
+            {paymentMethods.map((method) => {
+              const isActive = paymentMethod === method.value;
+              return (
+                <button
+                  key={method.value}
+                  onClick={() => setPaymentMethod(method.value)}
+                  aria-pressed={isActive}
+                  className={`flex flex-col items-center justify-center gap-1 rounded-lg px-2 py-3 text-sm font-semibold transition ${
+                    isActive
+                      ? `${method.activeClass} text-shell`
+                      : "bg-shell text-muted hover:text-ink"
+                  }`}
+                >
+                  {method.icon}
+                  {method.label}
+                </button>
+              );
+            })}
           </div>
 
           {/* Change calculator - only useful for cash */}

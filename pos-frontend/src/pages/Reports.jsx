@@ -92,6 +92,7 @@ const Reports = () => {
       ["Payment", "Bills", "Income"],
       ["Cash", report.byPayment.Cash.orders, report.byPayment.Cash.revenue],
       ["Card", report.byPayment.Card.orders, report.byPayment.Card.revenue],
+      ["QR Scan", report.byPayment.QR.orders, report.byPayment.QR.revenue],
       [],
       ["Price list", "Bills", "Income"],
       ["Local", report.byCustomerType.Local.orders, report.byCustomerType.Local.revenue],
@@ -236,7 +237,7 @@ const Reports = () => {
 
               <div className="rounded-xl bg-panel p-4">
                 <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted">
-                  Cash vs Card
+                  How customers paid
                 </h3>
                 <SplitRow
                   label="Cash"
@@ -251,6 +252,13 @@ const Reports = () => {
                   total={totals.revenue}
                   currency={currency}
                   color="#A8391A"
+                />
+                <SplitRow
+                  label="QR Scan"
+                  {...report.byPayment.QR}
+                  total={totals.revenue}
+                  currency={currency}
+                  color="#B8770C"
                 />
               </div>
             </div>
