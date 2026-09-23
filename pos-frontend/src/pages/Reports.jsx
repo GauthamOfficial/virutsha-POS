@@ -126,7 +126,7 @@ const Reports = () => {
     <section className="mx-auto max-w-6xl pb-10">
       <PageHeading
         title="Sales Reports"
-        subtitle={report ? `${formatDate(report.range.from)} — ${formatDate(report.range.to)}` : ""}
+        subtitle={report ? `${formatDate(report.range.from)} to ${formatDate(report.range.to)}` : ""}
       >
         <button
           onClick={downloadCsv}

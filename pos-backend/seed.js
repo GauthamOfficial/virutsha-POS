@@ -116,7 +116,7 @@ const run = async () => {
   // 3. Starter menu
   const dishCount = await Dish.countDocuments();
   if (dishCount > 0) {
-    console.log(`🍽️  Menu already has ${dishCount} dishes — leaving it alone.`);
+    console.log(`🍽️  Menu already has ${dishCount} dishes, leaving it alone.`);
   } else {
     for (const group of starterMenu) {
       const category = await Category.create(group.category);

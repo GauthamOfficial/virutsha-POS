@@ -25,6 +25,7 @@ const brand = {
     DEFAULT: "#CA840E",
     deep: "#8A5A06", // mustard as *text* on cream needs this step
     soft: "#F3E0B8", // tinted background for badges
+    light: "#FFD98A", // gold that stays legible ON terracotta
     chart: "#B8770C",
   },
   forest: {

@@ -15,7 +15,7 @@ const Wordmark = ({ size = "md", tone = "ink", className = "" }) => {
 
   // `cream` is for use on a terracotta or green fill; `ink` for the page.
   const mainTone = tone === "cream" ? "text-shell" : "text-terracotta";
-  const subTone = tone === "cream" ? "text-shell/75" : "text-mustard-deep";
+  const subTone = tone === "cream" ? "text-shell/90" : "text-mustard-deep";
 
   return (
     <span className={`flex flex-col leading-none ${className}`}>

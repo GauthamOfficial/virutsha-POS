@@ -76,23 +76,50 @@ const Auth = () => {
   const inputClass =
     "w-full rounded-lg border border-line bg-panel px-4 py-4 text-ink outline-none placeholder:text-faint focus:border-terracotta focus:ring-2 focus:ring-terracotta/30";
 
+  // Helps the type hold up over the busier parts of the rock. Contrast already
+  // passes without it, so this is polish rather than a crutch.
+  const overPhoto = { textShadow: "0 1px 12px rgba(46,13,3,0.45)" };
+
   return (
     <div className="flex min-h-screen w-full">
       {/* Brand side - hidden on small screens so the form gets the room.
-          Terracotta with the name set in type; no photograph to download and
-          no logo, since the real one is still being drawn. */}
-      <div className="relative hidden w-1/2 flex-col justify-between overflow-hidden bg-terracotta p-12 lg:flex">
+          Sigiriya rendered as a terracotta duotone. No logo, since the real
+          one is still being drawn.
+
+          `isolate` keeps the blend below from reaching the rest of the page. */}
+      <div className="relative isolate hidden w-1/2 flex-col justify-between overflow-hidden bg-terracotta p-12 lg:flex">
+        {/* Lifted and desaturated first, so the darker parts of the rock
+            survive the multiply below instead of crushing to black. */}
+        <img
+          src="/sigiriya.webp"
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+          style={{ filter: "saturate(0.5) brightness(1.35) contrast(0.92)" }}
+        />
+
+        {/* Brand-colours the photo instead of hiding it. Multiply keeps every
+            bit of the photo's detail, and because it can never return anything
+            lighter than the terracotta itself, the cream text is guaranteed at
+            least 6.95:1 no matter what the photograph contains. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-terracotta mix-blend-multiply"
+        />
+
+        {/* Warm washes. Kept gentle: at full strength the mustard one lifts the
+            background enough to pull the body copy under 4.5:1. */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0"
           style={{
             backgroundImage:
-              "radial-gradient(45rem 45rem at 10% 0%, rgba(202,132,14,0.28), transparent 60%), radial-gradient(40rem 40rem at 100% 100%, rgba(27,58,32,0.45), transparent 60%)",
+              "radial-gradient(45rem 45rem at 10% 0%, rgba(202,132,14,0.22), transparent 60%), radial-gradient(40rem 40rem at 100% 100%, rgba(27,58,32,0.5), transparent 60%)",
           }}
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          className="pointer-events-none absolute inset-0 opacity-[0.04]"
           style={{
             backgroundImage:
               "linear-gradient(#F7E8CB 1px, transparent 1px), linear-gradient(90deg, #F7E8CB 1px, transparent 1px)",
@@ -100,21 +127,23 @@ const Auth = () => {
           }}
         />
 
-        <Wordmark size="lg" tone="cream" className="relative" />
+        <div className="relative" style={overPhoto}>
+          <Wordmark size="lg" tone="cream" />
+        </div>
 
-        <div className="relative">
+        <div className="relative" style={overPhoto}>
           <h1 className="font-display text-4xl leading-tight text-shell">
-            Two price lists.
+            Good food brings
             <br />
-            <span className="text-mustard">One tap</span> between them.
+            <span className="text-mustard-light">people together</span>.
           </h1>
-          <p className="mt-4 max-w-sm text-shell/75">
-            Ring up the order once. Switch between local and visitor pricing whenever you
-            need to — the bill follows.
+          <p className="mt-4 max-w-sm text-shell/90">
+            Spices ground fresh each morning, rice slow-cooked, chai poured the proper
+            way. Traditional taste and warm hospitality, in the shadow of Sigiriya.
           </p>
         </div>
 
-        <p className="relative text-sm text-shell/60">
+        <p className="relative text-sm text-shell/90" style={overPhoto}>
           Authentic Tamil Flavours · Biriyani · Dosa · Idli · Chai
         </p>
       </div>
@@ -131,7 +160,7 @@ const Auth = () => {
           ) : (
             <>
               <h2 className="mb-2 mt-8 text-center font-display text-3xl text-terracotta">
-                {needsSetup ? "Welcome — let's set up" : "Sign in"}
+                {needsSetup ? "Welcome, let's set up" : "Sign in"}
               </h2>
               <p className="mb-8 text-center text-sm text-muted">
                 {needsSetup

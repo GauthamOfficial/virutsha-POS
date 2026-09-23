@@ -182,7 +182,7 @@ const getOrderById = async (req, res, next) => {
   }
 };
 
-// Admin-only. A bill is never deleted — it is marked void so the numbering and
+// Admin-only. A bill is never deleted. It is marked void so the numbering and
 // the paper trail stay intact, and it drops out of the sales figures.
 const voidOrder = async (req, res, next) => {
   try {

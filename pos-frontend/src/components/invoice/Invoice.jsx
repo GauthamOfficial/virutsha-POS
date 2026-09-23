@@ -40,6 +40,9 @@ const Invoice = ({ order, onClose }) => {
       td { padding: 2px 0; vertical-align: top; }
       .right { text-align: right; white-space: nowrap; }
       .total-row td { font-size: 14px; font-weight: bold; padding-top: 4px; }
+      /* Both numbers on one line. A touch smaller than the address so the
+         whole thing clears 72mm without wrapping mid-number. */
+      .phone-line { color: #333; font-size: 10px; white-space: nowrap; margin: 0; }
       .services-title { font-size: 11px; font-weight: bold; margin: 0 0 1px; }
       .services-body { font-size: 11px; margin: 0; }
       /* Deliberately a step larger than the lines above it. */
@@ -65,13 +68,6 @@ const Invoice = ({ order, onClose }) => {
       printWindow.close();
     }, 350);
   };
-
-  // A shop can have more than one number. Each goes on its own line so a
-  // number never wraps mid-way across a narrow thermal roll.
-  const phoneNumbers = (settings.phone || "")
-    .split("/")
-    .map((number) => number.trim())
-    .filter(Boolean);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 p-4">
@@ -100,11 +96,11 @@ const Invoice = ({ order, onClose }) => {
           {settings.addressLine && (
             <p className="center muted text-center text-[11px]">{settings.addressLine}</p>
           )}
-          {phoneNumbers.map((number, index) => (
-            <p key={number} className="center muted text-center text-[11px]">
-              {index === 0 ? `Tel: ${number}` : number}
+          {settings.phone && (
+            <p className="center phone-line text-center text-[11px]">
+              Tel: {settings.phone}
             </p>
-          ))}
+          )}
 
           <div className="divider my-2 border-t border-dashed border-black" />
 

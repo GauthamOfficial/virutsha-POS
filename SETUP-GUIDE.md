@@ -1,23 +1,23 @@
-# VISA Tamil Kitchen POS — Setup & Daily Use
+# VISA Tamil Kitchen POS: Setup & Daily Use
 
 This guide has two parts:
 
-- **Part A — Installing it on the laptop.** Done once, by whoever sets the laptop up.
-- **Part B — Using it day to day.** Written for the person running the restaurant.
+- **Part A: Installing it on the laptop.** Done once, by whoever sets the laptop up.
+- **Part B: Using it day to day.** Written for the person running the restaurant.
 
 ---
 
-# Part A — Installing on the laptop
+# Part A: Installing on the laptop
 
 You only do this once. Budget about 20 minutes, mostly waiting for downloads.
 
-## Step 1 — Install Node.js
+## Step 1: Install Node.js
 
 1. Go to <https://nodejs.org>
 2. Download the big green **LTS** button.
 3. Run the installer and click Next until it finishes. No settings need changing.
 
-## Step 2 — Install MongoDB (where the sales data is kept)
+## Step 2: Install MongoDB (where the sales data is kept)
 
 1. Go to <https://www.mongodb.com/try/download/community>
 2. Choose **Windows**, package **msi**, then Download.
@@ -25,13 +25,13 @@ You only do this once. Budget about 20 minutes, mostly waiting for downloads.
    - Choose **Complete** setup.
    - Leave **"Install MongoDB as a Service"** ticked. This makes the database start
      by itself every time the laptop is switched on, which is what you want.
-4. You can skip "MongoDB Compass" if it offers it — it isn't needed.
+4. You can skip "MongoDB Compass" if it offers it. It isn't needed.
 
 > **Why a database on the laptop instead of online?** The restaurant keeps working
 > when the internet is down. Nothing about taking an order or printing a bill needs
 > a connection.
 
-## Step 3 — Run the setup file
+## Step 3: Run the setup file
 
 In the `virutsha-pos` folder, double-click:
 
@@ -49,7 +49,7 @@ Login:     admin@visatamilkitchen.lk
 Password:  admin123
 ```
 
-## Step 4 — Start it
+## Step 4: Start it
 
 Double-click:
 
@@ -63,7 +63,7 @@ Log in with the details above.
 **Leave the black window open** while the restaurant is using the system. Closing
 it switches the POS off. At the end of the day, just close it.
 
-## Step 5 — Make it easy to open
+## Step 5: Make it easy to open
 
 Right-click `Start POS.bat` → **Show more options** → **Send to** → **Desktop
 (create shortcut)**. Rename the shortcut to "POS". Now it is one double-click from
@@ -73,7 +73,7 @@ To have it start automatically when the laptop switches on: press `Windows + R`,
 type `shell:startup`, press Enter, and drag a copy of that shortcut into the folder
 that opens.
 
-## Step 6 — Change the password and the shop details
+## Step 6: Change the password and the shop details
 
 1. Log in, go to **Manage → Staff**, and create a proper account for your sister
    (make it an **Admin**). Log in as that account and delete or disable the default
@@ -85,13 +85,13 @@ that opens.
 
 ## Using it from a phone or a tablet as well
 
-The laptop can serve the POS to other devices on the same Wi-Fi — handy for taking
+The laptop can serve the POS to other devices on the same Wi-Fi, which is handy for taking
 orders at the table.
 
 1. On the laptop, open a Command Prompt and type `ipconfig`. Find the
-   **IPv4 Address** — something like `192.168.1.8`.
+   **IPv4 Address**, something like `192.168.1.8`.
 2. On the phone, open a browser and go to `http://192.168.1.8:8000`.
-3. The first time, Windows may ask to allow Node.js through the firewall — say yes
+3. The first time, Windows may ask to allow Node.js through the firewall. Say yes
    for **Private networks**.
 
 The laptop must be on and the black window open for this to work.
@@ -120,12 +120,12 @@ in Excel.
 
 ---
 
-# Part B — Using the POS
+# Part B: Using the POS
 
 ## Taking an order
 
 1. Click **New Order**.
-2. **Choose Local or Foreigner at the top.** This is the price switch — the whole
+2. **Choose Local or Foreigner at the top.** This is the price switch. The whole
    menu and the whole bill change with it.
 3. Tap dishes to add them. Tap the same dish again to add another one.
 4. Adjust quantities with − and + in the bill on the right.
@@ -138,7 +138,7 @@ in Excel.
 ### About the Local / Foreigner switch
 
 You can flip it at any point, even after ringing up the whole order. Nothing is
-lost — every price on the screen and on the bill simply changes to the other price
+lost. Every price on the screen and on the bill simply changes to the other price
 list. If a tourist turns out to be a resident, one tap fixes the bill.
 
 The system also remembers which one you used last, so a shop that serves mostly
@@ -169,7 +169,7 @@ correctly.
 - a name,
 - a category,
 - a **Local price** and a **Foreigner price** (both required),
-- optionally a photo — pick any picture from the laptop or phone; it is shrunk
+- optionally a photo. Pick any picture from the laptop or phone; it is shrunk
   automatically, so a big photo is fine.
 
 If something is sold out today, edit the dish and untick **Available**. It
@@ -220,7 +220,7 @@ The black window was closed. Double-click `Start POS.bat` again.
 **The black window shows "Database connection failed"**
 MongoDB isn't running. Press `Windows + R`, type `services.msc`, find **MongoDB
 Server**, right-click → Start. If it isn't in the list, MongoDB was never installed
-— go back to Step 2.
+so go back to Step 2.
 
 **The browser says the page can't be reached**
 Give it a few more seconds and refresh. The server takes a moment to start.
@@ -232,5 +232,5 @@ on an ordinary A4 printer too.
 
 **Forgotten the password**
 Another Admin can set a new one from Manage → Staff. If every Admin password is
-lost, delete the `visa-pos` database and run `Setup (run once).bat` again —
+lost, delete the `visa-pos` database and run `Setup (run once).bat` again,
 but that erases the sales history, so back it up first.

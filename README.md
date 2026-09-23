@@ -1,13 +1,13 @@
-# 🍽️ VISA Tamil Kitchen — POS
+# 🍽️ VISA Tamil Kitchen POS
 
 A point-of-sale system for a restaurant that serves both local customers and
 visitors, built on the MERN stack.
 
 **Its defining feature is dual pricing.** Every dish carries a *Local* price and a
 *Foreigner* price, and one tap switches the entire menu and the running bill between
-them — at any point in the order, including after everything has been rung up.
+them at any point in the order, including after everything has been rung up.
 
-👉 **[SETUP-GUIDE.md](SETUP-GUIDE.md)** — installing it on the laptop, and how to use
+👉 **[SETUP-GUIDE.md](SETUP-GUIDE.md)** for installing it on the laptop, and how to use
 it day to day.
 
 ---
@@ -19,16 +19,16 @@ it day to day.
 | 💱 **Dual pricing** | Local / Foreigner switch that re-prices the whole cart live. The choice is remembered between orders and printed on the bill. The two labels are editable. |
 | 🍛 **Menu management** | Categories and dishes with a photo and both prices. Photos are shrunk in the browser and stored in the database, so there is no file server to run. |
 | 🧾 **Billing & invoicing** | Sequential bill numbers, an 80mm thermal-printer receipt that also prints on A4, and reprinting of any past bill. |
-| 📊 **Sales reports** | Daily, weekly, monthly, yearly or a custom range — income, bill count, average bill, income over time, Local vs Foreigner split, payment-method split, best sellers, and CSV export. |
+| 📊 **Sales reports** | Daily, weekly, monthly, yearly or a custom range. Income, bill count, average bill, income over time, Local vs Foreigner split, payment-method split, best sellers, and CSV export. |
 | 💵 **Cash, card & QR** | Cash with a change calculator, card through the shop's own machine, or a QR scan. No payment gateway. |
 | 👥 **Roles** | Cashiers take orders; Admins also manage the menu, staff, settings and reports. |
-| ⊘ **Voiding** | A wrong bill is voided, never deleted — it stays on record and drops out of the sales figures. |
+| ⊘ **Voiding** | A wrong bill is voided, never deleted. It stays on record and drops out of the sales figures. |
 | 🔌 **Offline-capable** | Runs entirely on the laptop with a local database. No internet needed to take an order or print a bill. |
 
 ## Brand
 
 Taken from the VISA Tamil Kitchen brand sheet. Defined once in
-[`pos-frontend/tailwind.config.js`](pos-frontend/tailwind.config.js) — no component
+[`pos-frontend/tailwind.config.js`](pos-frontend/tailwind.config.js). No component
 hardcodes a colour.
 
 | Role | Colour | Used for |
@@ -36,7 +36,7 @@ hardcodes a colour.
 | Deep Terracotta | `#8D2C0D` | Header, primary buttons, the main brand fill |
 | Mustard Gold | `#CA840E` | Active nav, the *Local* price list, accents |
 | Dark Green | `#1B3A20` | The *Foreigner* price list, cash, positive figures |
-| Cream | `#F7E8CB` | The page background — the whole POS reads as warm paper |
+| Cream | `#F7E8CB` | The page background, so the whole POS reads as warm paper |
 
 Two supporting notes:
 
@@ -47,7 +47,7 @@ Two supporting notes:
 - **Every text-on-background pair in the app clears WCAG AA.** The lowest is muted
   text on cream at 4.73:1.
 
-There is **no logo yet** — the name is set as type in
+There is **no logo yet**. The name is set as type in
 [`Wordmark.jsx`](pos-frontend/src/components/shared/Wordmark.jsx). When the real
 logo arrives it drops in beside or instead of that one component, and nothing else
 moves.
@@ -59,7 +59,7 @@ moves.
 | Frontend | React 18, Redux Toolkit, React Query, Tailwind CSS, Vite |
 | Backend | Node.js, Express |
 | Database | MongoDB (Mongoose) |
-| Auth | JWT — httpOnly cookie, with Bearer token fallback for cross-domain hosting |
+| Auth | JWT, httpOnly cookie, with Bearer token fallback for cross-domain hosting |
 
 ## Project layout
 
@@ -91,21 +91,21 @@ virutsha-pos/
 ## Running it for development
 
 ```bash
-# Terminal 1 — backend
+# Terminal 1: backend
 cd pos-backend
 cp .env.example .env        # then check MONGODB_URI
 npm install
 npm run seed                # once: creates the admin login + starter menu
 npm run dev                 # http://localhost:8000
 
-# Terminal 2 — frontend
+# Terminal 2: frontend
 cd pos-frontend
 npm install
 npm run dev                 # http://localhost:5173
 ```
 
 For production on the laptop, build the frontend once (`npm run build` in
-`pos-frontend`) and then just run the backend — it serves the built app itself, so
+`pos-frontend`) and then just run the backend. It serves the built app itself, so
 the whole POS is on `http://localhost:8000` with no CORS and one window to keep open.
 
 ## API

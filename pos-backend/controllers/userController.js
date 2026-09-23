@@ -86,7 +86,7 @@ const login = async (req, res, next) => {
       success: true,
       message: "Logged in successfully!",
       // Also returned so the frontend can store it and send it as a Bearer
-      // token — needed when the site and API are on different domains.
+      // token, needed when the site and API are on different domains.
       token: accessToken,
       data: publicUser(user),
     });
