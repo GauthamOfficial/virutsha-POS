@@ -20,6 +20,8 @@ const updateSettings = async (req, res, next) => {
       "taxRate",
       "taxLabel",
       "receiptFooter",
+      "otherServicesTitle",
+      "otherServices",
       "localLabel",
       "foreignLabel",
     ];

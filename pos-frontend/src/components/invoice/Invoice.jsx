@@ -40,6 +40,10 @@ const Invoice = ({ order, onClose }) => {
       td { padding: 2px 0; vertical-align: top; }
       .right { text-align: right; white-space: nowrap; }
       .total-row td { font-size: 14px; font-weight: bold; padding-top: 4px; }
+      .services-title { font-size: 11px; font-weight: bold; margin: 0 0 1px; }
+      .services-body { font-size: 11px; margin: 0; }
+      /* Deliberately a step larger than the lines above it. */
+      .footer-note { font-size: 14px; font-weight: bold; margin: 6px 0 0; }
       .badge {
         display: inline-block;
         border: 1px solid #000;
@@ -204,7 +208,20 @@ const Invoice = ({ order, onClose }) => {
 
           <div className="divider my-2 border-t border-dashed border-black" />
 
-          <p className="center text-center text-[11px]">{settings.receiptFooter}</p>
+          {settings.otherServices && (
+            <div className="services mb-2">
+              <p className="center services-title text-center text-[11px] font-bold">
+                {settings.otherServicesTitle || "Our Other Services"}
+              </p>
+              <p className="center services-body text-center text-[11px]">
+                {settings.otherServices}
+              </p>
+            </div>
+          )}
+
+          <p className="center footer-note text-center text-[13px] font-bold">
+            {settings.receiptFooter}
+          </p>
         </div>
 
         <div className="mt-4 flex gap-2">

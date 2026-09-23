@@ -18,6 +18,13 @@ const settingsSchema = new mongoose.Schema(
 
     receiptFooter: { type: String, default: "Thank you! Please come again." },
 
+    // A small cross-promotion block printed just above the footer.
+    otherServicesTitle: { type: String, default: "Our Other Services" },
+    otherServices: {
+      type: String,
+      default: "Priyani Diver’s Room & Prime Auto Service",
+    },
+
     localLabel: { type: String, default: "Local" },
     foreignLabel: { type: String, default: "Foreigner" },
   },

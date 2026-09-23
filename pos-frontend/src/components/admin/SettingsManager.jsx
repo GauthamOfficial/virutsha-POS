@@ -78,7 +78,28 @@ const SettingsManager = () => {
               className={inputClass}
             />
           </Field>
-          <Field label="Footer message">
+          <Field
+            label="Other services heading"
+            hint="Leave the line below empty to hide this block from the bill."
+          >
+            <input
+              type="text"
+              value={form.otherServicesTitle}
+              onChange={(e) => setField("otherServicesTitle", e.target.value)}
+              placeholder="Our Other Services"
+              className={inputClass}
+            />
+          </Field>
+          <Field label="Other services">
+            <input
+              type="text"
+              value={form.otherServices}
+              onChange={(e) => setField("otherServices", e.target.value)}
+              placeholder="e.g. Priyani Diver’s Room & Prime Auto Service"
+              className={inputClass}
+            />
+          </Field>
+          <Field label="Footer message" hint="Printed largest, at the very bottom.">
             <input
               type="text"
               value={form.receiptFooter}
