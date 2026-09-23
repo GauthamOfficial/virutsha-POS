@@ -62,10 +62,12 @@ const Invoice = ({ order, onClose }) => {
     }, 350);
   };
 
-  const typeLabel =
-    order.customerType === "Foreigner"
-      ? settings.foreignLabel || "Foreigner"
-      : settings.localLabel || "Local";
+  // A shop can have more than one number. Each goes on its own line so a
+  // number never wraps mid-way across a narrow thermal roll.
+  const phoneNumbers = (settings.phone || "")
+    .split("/")
+    .map((number) => number.trim())
+    .filter(Boolean);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 p-4">
@@ -94,9 +96,11 @@ const Invoice = ({ order, onClose }) => {
           {settings.addressLine && (
             <p className="center muted text-center text-[11px]">{settings.addressLine}</p>
           )}
-          {settings.phone && (
-            <p className="center muted text-center text-[11px]">Tel: {settings.phone}</p>
-          )}
+          {phoneNumbers.map((number, index) => (
+            <p key={number} className="center muted text-center text-[11px]">
+              {index === 0 ? `Tel: ${number}` : number}
+            </p>
+          ))}
 
           <div className="divider my-2 border-t border-dashed border-black" />
 
@@ -116,16 +120,6 @@ const Invoice = ({ order, onClose }) => {
                   <td className="right text-right">{order.customerDetails.name}</td>
                 </tr>
               )}
-              {order.cashierName && (
-                <tr>
-                  <td>Served by</td>
-                  <td className="right text-right">{order.cashierName}</td>
-                </tr>
-              )}
-              <tr>
-                <td>Price list</td>
-                <td className="right text-right">{typeLabel}</td>
-              </tr>
             </tbody>
           </table>
 

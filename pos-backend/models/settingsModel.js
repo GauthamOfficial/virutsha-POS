@@ -6,8 +6,8 @@ const settingsSchema = new mongoose.Schema(
     key: { type: String, default: "shop", unique: true },
 
     restaurantName: { type: String, default: "VISA Tamil Kitchen" },
-    addressLine: { type: String, default: "" },
-    phone: { type: String, default: "" },
+    addressLine: { type: String, default: "Sigiriya Road, Pothana, Kimbissa" },
+    phone: { type: String, default: "+94 70 644 5506 / +94 71 778 5189" },
 
     currencySymbol: { type: String, default: "Rs" },
     currencyCode: { type: String, default: "LKR" },

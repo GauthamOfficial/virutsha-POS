@@ -73,7 +73,27 @@ const run = async () => {
 
   // 1. Shop settings
   const settings = await getSettings();
+
+  // A schema default only applies when the document is first created, so an
+  // installation set up before these were filled in would still be blank.
+  // Fill only what is empty - anything typed in Settings is left alone.
+  const backfill = {
+    addressLine: "Sigiriya Road, Pothana, Kimbissa",
+    phone: "+94 70 644 5506 / +94 71 778 5189",
+  };
+
+  let filled = false;
+  for (const [field, value] of Object.entries(backfill)) {
+    if (!settings[field] || !String(settings[field]).trim()) {
+      settings[field] = value;
+      filled = true;
+    }
+  }
+  if (filled) await settings.save();
+
   console.log(`⚙️  Settings ready for "${settings.restaurantName}"`);
+  console.log(`   ${settings.addressLine}`);
+  console.log(`   ${settings.phone}`);
 
   // 2. Admin account
   const existingAdmin = await User.findOne({ email: config.seedAdmin.email.toLowerCase() });

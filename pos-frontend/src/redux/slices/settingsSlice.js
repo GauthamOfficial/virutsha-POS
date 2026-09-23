@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const defaultSettings = {
   restaurantName: "VISA Tamil Kitchen",
-  addressLine: "",
-  phone: "",
+  addressLine: "Sigiriya Road, Pothana, Kimbissa",
+  phone: "+94 70 644 5506 / +94 71 778 5189",
   currencySymbol: "Rs",
   currencyCode: "LKR",
   taxRate: 0,
