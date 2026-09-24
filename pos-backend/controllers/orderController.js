@@ -36,32 +36,50 @@ const buildBill = async ({ items, customerType, discount }) => {
 
     const unitPrice = isForeigner ? dish.priceForeign : dish.priceLocal;
 
+    // Per-line discount, e.g. 10% off this dish only.
+    let percent = Number(item.discountPercent) || 0;
+    if (!Number.isFinite(percent) || percent < 0) percent = 0;
+    if (percent > 100) percent = 100;
+    percent = Math.round(percent * 100) / 100;
+
+    const grossAmount = round2(unitPrice * quantity);
+    const discountAmount = round2((grossAmount * percent) / 100);
+
     lineItems.push({
       dish: dish._id,
       name: dish.name,
       unitPrice: round2(unitPrice),
       quantity,
-      amount: round2(unitPrice * quantity),
+      discountPercent: percent,
+      grossAmount,
+      discountAmount,
+      amount: round2(grossAmount - discountAmount),
     });
   }
 
   const settings = await getSettings();
 
-  const subtotal = round2(lineItems.reduce((sum, i) => sum + i.amount, 0));
+  // Subtotal is the full value of the order, before either kind of discount.
+  const subtotal = round2(lineItems.reduce((sum, i) => sum + i.grossAmount, 0));
+  const itemDiscount = round2(lineItems.reduce((sum, i) => sum + i.discountAmount, 0));
+
+  // The bill-wide discount then comes off whatever is left, so the two kinds
+  // can be combined without ever taking off more than the order is worth.
+  const afterItemDiscounts = round2(subtotal - itemDiscount);
 
   let discountValue = Number(discount) || 0;
-  if (discountValue < 0) discountValue = 0;
-  if (discountValue > subtotal) discountValue = subtotal;
+  if (!Number.isFinite(discountValue) || discountValue < 0) discountValue = 0;
+  if (discountValue > afterItemDiscounts) discountValue = afterItemDiscounts;
   discountValue = round2(discountValue);
 
-  const taxable = round2(subtotal - discountValue);
+  const taxable = round2(afterItemDiscounts - discountValue);
   const taxRate = Number(settings.taxRate) || 0;
   const tax = round2((taxable * taxRate) / 100);
   const total = round2(taxable + tax);
 
   return {
     items: lineItems,
-    bills: { subtotal, discount: discountValue, taxRate, tax, total },
+    bills: { subtotal, itemDiscount, discount: discountValue, taxRate, tax, total },
   };
 };
 

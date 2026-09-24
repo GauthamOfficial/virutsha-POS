@@ -135,8 +135,24 @@ const Invoice = ({ order, onClose }) => {
                     <span className="muted text-[11px]">
                       {item.quantity} x {formatMoney(item.unitPrice, currency)}
                     </span>
+                    {item.discountPercent > 0 && (
+                      <>
+                        <br />
+                        <span className="muted text-[11px]">
+                          less {item.discountPercent}%
+                        </span>
+                      </>
+                    )}
                   </td>
                   <td className="right text-right align-bottom">
+                    {item.discountPercent > 0 && (
+                      <>
+                        <span className="muted text-[11px]">
+                          {formatMoney(item.grossAmount, currency)}
+                        </span>
+                        <br />
+                      </>
+                    )}
                     {formatMoney(item.amount, currency)}
                   </td>
                 </tr>
@@ -153,9 +169,18 @@ const Invoice = ({ order, onClose }) => {
                 <td className="right text-right">{formatMoney(order.bills.subtotal, currency)}</td>
               </tr>
 
+              {order.bills.itemDiscount > 0 && (
+                <tr>
+                  <td>Item discounts</td>
+                  <td className="right text-right">
+                    − {formatMoney(order.bills.itemDiscount, currency)}
+                  </td>
+                </tr>
+              )}
+
               {order.bills.discount > 0 && (
                 <tr>
-                  <td>Discount</td>
+                  <td>Bill discount</td>
                   <td className="right text-right">
                     − {formatMoney(order.bills.discount, currency)}
                   </td>

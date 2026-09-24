@@ -84,7 +84,9 @@ const Reports = () => {
       ["Bills", totals.orders],
       ["Items sold", totals.itemsSold],
       ["Subtotal", totals.subtotal],
-      ["Discounts", totals.discount],
+      ["Discounts on items", totals.itemDiscount],
+      ["Discounts on whole bills", totals.billDiscount],
+      ["Discounts total", totals.discount],
       ["Tax", totals.tax],
       ["Total income", totals.revenue],
       ["Average bill", totals.averageBill],
@@ -200,7 +202,10 @@ const Reports = () => {
               <Figure
                 label="Discounts given"
                 value={formatMoney(totals.discount, currency)}
-                hint={totals.tax > 0 ? `Tax ${formatMoney(totals.tax, currency)}` : undefined}
+                hint={`${formatMoney(totals.itemDiscount, currency)} on items, ${formatMoney(
+                  totals.billDiscount,
+                  currency
+                )} on bills`}
                 accent="#9B1C1C"
               />
             </div>

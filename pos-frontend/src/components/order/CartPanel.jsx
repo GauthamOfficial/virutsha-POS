@@ -2,23 +2,19 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
-import { RiDeleteBin2Fill } from "react-icons/ri";
 import { FaMoneyBillWave, FaCreditCard, FaTrash, FaQrcode } from "react-icons/fa";
 import {
   clearCart,
-  decreaseQuantity,
-  increaseQuantity,
-  removeItem,
   selectBill,
   selectCartItems,
   setDiscount,
-  unitPriceFor,
 } from "../../redux/slices/cartSlice";
 import { resetCustomer, setCustomerDetails } from "../../redux/slices/customerSlice";
 import { addOrder } from "../../https";
 import { errorMessage } from "../../https/axiosWrapper";
 import { formatMoney } from "../../utils";
 import CustomerTypeToggle from "./CustomerTypeToggle";
+import CartLine from "./CartLine";
 import Invoice from "../invoice/Invoice";
 
 // The three ways the shop takes money. Each keeps its own colour so the
@@ -102,7 +98,11 @@ const CartPanel = () => {
         phone: customer.phone,
         guests: customer.guests,
       },
-      items: items.map((item) => ({ dish: item.dishId, quantity: item.quantity })),
+      items: items.map((item) => ({
+        dish: item.dishId,
+        quantity: item.quantity,
+        discountPercent: item.discountPercent || 0,
+      })),
       paymentMethod,
       discount: bill.discount,
       amountPaid: paymentMethod === "Cash" && cashGiven > 0 ? cashGiven : bill.total,
@@ -145,54 +145,9 @@ const CartPanel = () => {
             </p>
           ) : (
             <ul className="space-y-2">
-              {items.map((item) => {
-                const unitPrice = unitPriceFor(item, customer.customerType);
-                return (
-                  <li key={item.dishId} className="rounded-lg bg-shell p-3">
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <p className="text-sm font-semibold text-ink">{item.name}</p>
-                        <p className="text-xs text-muted">
-                          {formatMoney(unitPrice, currency)} each
-                        </p>
-                      </div>
-                      <p className="whitespace-nowrap text-sm font-bold text-ink">
-                        {formatMoney(unitPrice * item.quantity, currency)}
-                      </p>
-                    </div>
-
-                    <div className="mt-3 flex items-center justify-between">
-                      <button
-                        onClick={() => dispatch(removeItem(item.dishId))}
-                        className="text-muted transition hover:text-danger"
-                        aria-label={`Remove ${item.name}`}
-                      >
-                        <RiDeleteBin2Fill size={18} />
-                      </button>
-
-                      <div className="flex items-center gap-4 rounded-lg bg-raised px-3 py-1">
-                        <button
-                          onClick={() => dispatch(decreaseQuantity(item.dishId))}
-                          className="text-xl font-bold text-mustard-deep"
-                          aria-label="Decrease quantity"
-                        >
-                          &minus;
-                        </button>
-                        <span className="min-w-[1.5rem] text-center font-semibold text-ink">
-                          {item.quantity}
-                        </span>
-                        <button
-                          onClick={() => dispatch(increaseQuantity(item.dishId))}
-                          className="text-xl font-bold text-mustard-deep"
-                          aria-label="Increase quantity"
-                        >
-                          &#43;
-                        </button>
-                      </div>
-                    </div>
-                  </li>
-                );
-              })}
+              {items.map((item) => (
+                <CartLine key={item.dishId} item={item} />
+              ))}
             </ul>
           )}
         </div>
@@ -203,7 +158,7 @@ const CartPanel = () => {
             onClick={() => setShowDetails((prev) => !prev)}
             className="w-full text-left text-xs font-semibold text-muted transition hover:text-ink"
           >
-            {showDetails ? "− Hide" : "+ Add"} customer name / discount (optional)
+            {showDetails ? "− Hide" : "+ Add"} customer name / whole-bill discount
           </button>
 
           {showDetails && (
@@ -223,7 +178,7 @@ const CartPanel = () => {
                 className="w-full rounded-lg bg-shell px-3 py-2 text-sm text-ink outline-none placeholder:text-faint"
               />
               <div className="flex items-center gap-2">
-                <label className="shrink-0 text-xs text-muted">Discount</label>
+                <label className="shrink-0 text-xs text-muted">Off bill</label>
                 <input
                   type="number"
                   min="0"
@@ -245,9 +200,16 @@ const CartPanel = () => {
               <span>{formatMoney(bill.subtotal, currency)}</span>
             </div>
 
+            {bill.itemDiscount > 0 && (
+              <div className="flex justify-between text-forest">
+                <span>Item discounts</span>
+                <span>&minus; {formatMoney(bill.itemDiscount, currency)}</span>
+              </div>
+            )}
+
             {bill.discount > 0 && (
               <div className="flex justify-between text-forest">
-                <span>Discount</span>
+                <span>Bill discount</span>
                 <span>− {formatMoney(bill.discount, currency)}</span>
               </div>
             )}

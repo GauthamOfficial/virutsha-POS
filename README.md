@@ -18,6 +18,7 @@ it day to day.
 |---|---|
 | 💱 **Dual pricing** | Local / Foreigner switch that re-prices the whole cart live. The choice is remembered between orders and printed on the bill. The two labels are editable. |
 | 🍛 **Menu management** | Categories and dishes with a photo and both prices. Photos are shrunk in the browser and stored in the database, so there is no file server to run. |
+| 🏷️ **Discounts** | A percentage off any single item, a flat amount off the whole bill, or both. Item percentages apply first, so the two together can never exceed the order value. Both are itemised on the bill and split out in the reports. |
 | 🧾 **Billing & invoicing** | Sequential bill numbers, an 80mm thermal-printer receipt that also prints on A4, and reprinting of any past bill. |
 | 📊 **Sales reports** | Daily, weekly, monthly, yearly or a custom range. Income, bill count, average bill, income over time, Local vs Foreigner split, payment-method split, best sellers, and CSV export. |
 | 💵 **Cash, card & QR** | Cash with a change calculator, card through the shop's own machine, or a QR scan. No payment gateway. |
@@ -135,8 +136,8 @@ Routes marked 🔒 are Admin-only.
 
 ### A note on how bills are priced
 
-The browser sends only *which dish* and *how many*, plus the Local/Foreigner
-choice. The server looks up the real prices, picks the right one for the customer
+The browser sends only *which dish*, *how many* and *what percentage off*, plus
+the Local/Foreigner choice. The server looks up the real prices, picks the right one for the customer
 type, and recalculates the whole bill before saving. Prices coming from the browser
 are ignored entirely, so a tampered or out-of-date page cannot change what gets
 charged or recorded.

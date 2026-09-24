@@ -146,11 +146,27 @@ tourists doesn't have to keep switching.
 
 ### Optional extras on a bill
 
-Click **+ Add customer name / discount** in the bill panel if you want to:
+Click **+ Add customer name / whole-bill discount** in the bill panel if you want to:
 - record the customer's name or phone on the bill
-- take money off the bill (a discount in rupees)
+- take money off the whole bill (an amount in rupees)
 
 Neither is required. A bill with no name is recorded as "Walk-in".
+
+## Discounting one item
+
+To take a percentage off a single dish rather than the whole bill, tap the
+**%** button on that line in the bill panel. Pick one of the quick amounts
+(5, 10, 15, 20, 25, 50) or type your own.
+
+The line then shows the old price crossed out next to the new one, and a small
+badge saying how much the customer saved. Tap **Clear** to remove it.
+
+The two kinds of discount can be used together. Per-item percentages come off
+first, then the whole-bill amount comes off what is left, so between them they
+can never take off more than the order is worth.
+
+Both appear separately on the printed bill and in the sales reports, so you can
+always see how much was given away and in which way.
 
 ## Reprinting a bill
 

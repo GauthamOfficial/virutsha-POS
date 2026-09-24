@@ -59,6 +59,8 @@ const summarise = (orders) => {
     orders: orders.length,
     itemsSold: 0,
     subtotal: 0,
+    itemDiscount: 0,
+    billDiscount: 0,
     discount: 0,
     tax: 0,
     revenue: 0,
@@ -76,7 +78,8 @@ const summarise = (orders) => {
 
   for (const order of orders) {
     totals.subtotal += order.bills.subtotal;
-    totals.discount += order.bills.discount || 0;
+    totals.itemDiscount += order.bills.itemDiscount || 0;
+    totals.billDiscount += order.bills.discount || 0;
     totals.tax += order.bills.tax || 0;
     totals.revenue += order.bills.total;
     totals.itemsSold += order.items.reduce((sum, i) => sum + i.quantity, 0);
@@ -95,7 +98,10 @@ const summarise = (orders) => {
   }
 
   totals.subtotal = round2(totals.subtotal);
-  totals.discount = round2(totals.discount);
+  totals.itemDiscount = round2(totals.itemDiscount);
+  totals.billDiscount = round2(totals.billDiscount);
+  // Everything given away, however it was given.
+  totals.discount = round2(totals.itemDiscount + totals.billDiscount);
   totals.tax = round2(totals.tax);
   totals.revenue = round2(totals.revenue);
   totals.averageBill = totals.orders ? round2(totals.revenue / totals.orders) : 0;

@@ -6,7 +6,7 @@ import { createSlice } from "@reduxjs/toolkit";
  * whole order instantly without the cashier re-entering a single item.
  */
 const initialState = {
-  items: [], // { dishId, name, priceLocal, priceForeign, quantity }
+  items: [], // { dishId, name, priceLocal, priceForeign, quantity, discountPercent }
   discount: 0,
 };
 
@@ -24,7 +24,7 @@ const cartSlice = createSlice({
         existing.priceLocal = priceLocal;
         existing.priceForeign = priceForeign;
       } else {
-        state.items.push({ dishId, name, priceLocal, priceForeign, quantity });
+        state.items.push({ dishId, name, priceLocal, priceForeign, quantity, discountPercent: 0 });
       }
     },
 
@@ -60,6 +60,21 @@ const cartSlice = createSlice({
       state.items = state.items.filter((i) => i.dishId !== action.payload);
     },
 
+    // Percentage off one line only. Kept separate from the bill-wide
+    // discount below, which is a flat amount off the whole order.
+    setItemDiscount: (state, action) => {
+      const { dishId, percent } = action.payload;
+      const item = state.items.find((i) => i.dishId === dishId);
+      if (!item) return;
+
+      const value = Number(percent);
+      if (!Number.isFinite(value) || value <= 0) {
+        item.discountPercent = 0;
+        return;
+      }
+      item.discountPercent = Math.min(100, Math.round(value * 100) / 100);
+    },
+
     setDiscount: (state, action) => {
       const value = Number(action.payload);
       state.discount = Number.isFinite(value) && value > 0 ? value : 0;
@@ -80,24 +95,47 @@ export const selectCartItems = (state) => state.cart.items;
 export const selectCartCount = (state) =>
   state.cart.items.reduce((sum, item) => sum + item.quantity, 0);
 
+// What one line is worth before and after its own percentage discount.
+export const lineAmountsFor = (item, customerType) => {
+  const unitPrice = unitPriceFor(item, customerType);
+  const gross = unitPrice * item.quantity;
+  const percent = Math.min(100, Math.max(0, Number(item.discountPercent) || 0));
+  const discount = (gross * percent) / 100;
+
+  return { unitPrice, percent, gross, discount, net: gross - discount };
+};
+
 export const selectSubtotal = (state) => {
   const { customerType } = state.customer;
   return state.cart.items.reduce(
-    (sum, item) => sum + unitPriceFor(item, customerType) * item.quantity,
+    (sum, item) => sum + lineAmountsFor(item, customerType).gross,
     0
   );
 };
 
 // Full bill maths, mirroring what the backend recalculates when saving.
 export const selectBill = (state) => {
-  const subtotal = selectSubtotal(state);
-  const discount = Math.min(state.cart.discount || 0, subtotal);
-  const taxable = subtotal - discount;
+  const { customerType } = state.customer;
+
+  let subtotal = 0;
+  let itemDiscount = 0;
+  for (const item of state.cart.items) {
+    const line = lineAmountsFor(item, customerType);
+    subtotal += line.gross;
+    itemDiscount += line.discount;
+  }
+
+  // The bill-wide discount comes off what is left after the per-line ones.
+  const afterItemDiscounts = subtotal - itemDiscount;
+  const discount = Math.min(state.cart.discount || 0, afterItemDiscounts);
+
+  const taxable = afterItemDiscounts - discount;
   const taxRate = Number(state.settings.data.taxRate) || 0;
   const tax = (taxable * taxRate) / 100;
 
   return {
     subtotal,
+    itemDiscount,
     discount,
     taxRate,
     tax,
@@ -107,6 +145,7 @@ export const selectBill = (state) => {
 
 export const {
   addItem,
+  setItemDiscount,
   increaseQuantity,
   decreaseQuantity,
   setQuantity,
