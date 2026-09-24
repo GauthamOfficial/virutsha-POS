@@ -7,6 +7,7 @@ import { formatMoney, formatDate, todayISO } from "../utils";
 import PageHeading from "../components/shared/PageHeading";
 import EmptyState from "../components/shared/EmptyState";
 import SalesChart from "../components/reports/SalesChart";
+import DateField from "../components/shared/DateField";
 
 const periods = [
   { value: "daily", label: "Daily" },
@@ -157,19 +158,9 @@ const Reports = () => {
 
         {period === "custom" && (
           <div className="flex flex-wrap items-center gap-2">
-            <input
-              type="date"
-              value={from}
-              onChange={(e) => setFrom(e.target.value)}
-              className="rounded-lg bg-panel px-3 py-2 text-sm text-ink outline-none [color-scheme:dark]"
-            />
+            <DateField value={from} onChange={setFrom} className="py-2" />
             <span className="text-muted">to</span>
-            <input
-              type="date"
-              value={to}
-              onChange={(e) => setTo(e.target.value)}
-              className="rounded-lg bg-panel px-3 py-2 text-sm text-ink outline-none [color-scheme:dark]"
-            />
+            <DateField value={to} onChange={setTo} className="py-2" />
           </div>
         )}
       </div>

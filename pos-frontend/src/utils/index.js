@@ -107,4 +107,15 @@ const paymentLabels = { Cash: "Cash", Card: "Card", QR: "QR Scan" };
 
 export const paymentLabel = (method) => paymentLabels[method] || method || "";
 
-export const todayISO = () => new Date().toISOString().slice(0, 10);
+/**
+ * Today's date as YYYY-MM-DD, in the shop's own timezone.
+ *
+ * Deliberately not `toISOString()`, which converts to UTC first. Sri Lanka is
+ * UTC+5:30, so between midnight and 05:30 local that returns yesterday, and
+ * the Bills page would open on the wrong day just as the shop closes up and
+ * goes to check the day's takings.
+ */
+export const todayISO = (date = new Date()) => {
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+};

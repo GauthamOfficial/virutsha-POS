@@ -11,6 +11,7 @@ import PageHeading from "../components/shared/PageHeading";
 import EmptyState from "../components/shared/EmptyState";
 import Invoice from "../components/invoice/Invoice";
 import Modal from "../components/shared/Modal";
+import DateField from "../components/shared/DateField";
 
 const Bills = () => {
   const isAdmin = useSelector((state) => state.user.role === "Admin");
@@ -92,31 +93,23 @@ const Bills = () => {
           />
         </div>
 
-        <label className="flex items-center gap-2 rounded-xl bg-panel px-4 py-3 text-sm text-muted">
-          From
-          <input
-            type="date"
-            value={from}
-            onChange={(e) => {
-              setFrom(e.target.value);
-              setPage(1);
-            }}
-            className="w-full bg-transparent text-ink outline-none [color-scheme:dark]"
-          />
-        </label>
+        <DateField
+          label="From"
+          value={from}
+          onChange={(next) => {
+            setFrom(next);
+            setPage(1);
+          }}
+        />
 
-        <label className="flex items-center gap-2 rounded-xl bg-panel px-4 py-3 text-sm text-muted">
-          To
-          <input
-            type="date"
-            value={to}
-            onChange={(e) => {
-              setTo(e.target.value);
-              setPage(1);
-            }}
-            className="w-full bg-transparent text-ink outline-none [color-scheme:dark]"
-          />
-        </label>
+        <DateField
+          label="To"
+          value={to}
+          onChange={(next) => {
+            setTo(next);
+            setPage(1);
+          }}
+        />
       </div>
 
       {/* Results */}

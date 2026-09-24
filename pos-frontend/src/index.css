@@ -5,10 +5,9 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    /* Stops the layout shifting sideways when a page grows a scrollbar. */
-    scrollbar-gutter: stable;
-  }
+  /* No scrollbar-gutter here on purpose. Reserving the gutter leaves a strip
+     of page background down the right-hand side, which is invisible against
+     the cream body but shows as a notch beside the terracotta header. */
 
   body {
     @apply bg-shell text-ink;
