@@ -120,7 +120,7 @@ const MenuGrid = () => {
             }
           />
         ) : (
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
             {visibleDishes.map((dish) => {
               const price = customerType === "Foreigner" ? dish.priceForeign : dish.priceLocal;
               const inCart = quantityInCart(dish._id);
@@ -131,7 +131,7 @@ const MenuGrid = () => {
                   onClick={() => handleAdd(dish)}
                   className="group relative flex flex-col overflow-hidden rounded-xl bg-panel text-left transition hover:bg-raised focus:outline-none focus:ring-2 focus:ring-terracotta"
                 >
-                  <div className="relative h-24 w-full overflow-hidden bg-raised">
+                  <div className="relative aspect-square w-full overflow-hidden bg-raised">
                     {dish.image ? (
                       <img
                         src={dish.image}
@@ -140,7 +140,7 @@ const MenuGrid = () => {
                         loading="lazy"
                       />
                     ) : (
-                      <div className="flex h-full w-full items-center justify-center text-3xl text-faint">
+                      <div className="flex h-full w-full items-center justify-center text-5xl text-faint/60">
                         <BiSolidDish />
                       </div>
                     )}

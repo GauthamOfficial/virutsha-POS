@@ -62,7 +62,7 @@ export const greetingFor = (date = new Date()) => {
  * a 4 MB phone picture becomes roughly 40 KB with no visible difference at the
  * size the menu tiles actually display it.
  */
-export const compressImage = (file, { maxSize = 600, quality = 0.75 } = {}) =>
+export const compressImage = (file, { maxSize = 500, quality = 0.78 } = {}) =>
   new Promise((resolve, reject) => {
     if (!file) return reject(new Error("No file selected."));
     if (!file.type.startsWith("image/")) {
@@ -79,19 +79,25 @@ export const compressImage = (file, { maxSize = 600, quality = 0.75 } = {}) =>
       img.onerror = () => reject(new Error("That file is not a valid image."));
 
       img.onload = () => {
-        const scale = Math.min(1, maxSize / Math.max(img.width, img.height));
-        const width = Math.round(img.width * scale);
-        const height = Math.round(img.height * scale);
+        // Menu tiles are square, so take a centred square out of the photo
+        // here rather than at display time. The admin's preview is then
+        // exactly what the till shows, and nothing is stored that would only
+        // be cropped away later. A wide photo loses its edges, which is what
+        // any square tile would have hidden anyway.
+        const side = Math.min(img.width, img.height);
+        const sourceX = Math.round((img.width - side) / 2);
+        const sourceY = Math.round((img.height - side) / 2);
+        const size = Math.round(Math.min(maxSize, side));
 
         const canvas = document.createElement("canvas");
-        canvas.width = width;
-        canvas.height = height;
+        canvas.width = size;
+        canvas.height = size;
 
         const ctx = canvas.getContext("2d");
         // White backing so transparent PNGs do not turn black as JPEG.
         ctx.fillStyle = "#ffffff";
-        ctx.fillRect(0, 0, width, height);
-        ctx.drawImage(img, 0, 0, width, height);
+        ctx.fillRect(0, 0, size, size);
+        ctx.drawImage(img, sourceX, sourceY, side, side, 0, 0, size, size);
 
         resolve(canvas.toDataURL("image/jpeg", quality));
       };
