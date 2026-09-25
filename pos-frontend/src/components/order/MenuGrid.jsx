@@ -8,6 +8,17 @@ import { addItem, selectCartItems } from "../../redux/slices/cartSlice";
 import { formatMoney } from "../../utils";
 import EmptyState from "../shared/EmptyState";
 
+/**
+ * Tiles hold their size and the column count follows the available width,
+ * rather than fixed counts at a handful of breakpoints. Past the widest
+ * breakpoint those stop adding columns and just stretch each tile, so zooming
+ * the browser out showed the same dishes bigger instead of more dishes.
+ *
+ * auto-fill rather than auto-fit: with only a couple of dishes on a wide
+ * screen, auto-fit collapses the empty tracks and stretches them across it.
+ */
+const dishGrid = "grid grid-cols-[repeat(auto-fill,minmax(10.5rem,1fr))] gap-3";
+
 const MenuGrid = () => {
   const dispatch = useDispatch();
   const [activeCategory, setActiveCategory] = useState("all");
@@ -120,7 +131,7 @@ const MenuGrid = () => {
             }
           />
         ) : (
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+          <div className={dishGrid}>
             {visibleDishes.map((dish) => {
               const price = customerType === "Foreigner" ? dish.priceForeign : dish.priceLocal;
               const inCart = quantityInCart(dish._id);
