@@ -22,7 +22,7 @@ const settingsSchema = new mongoose.Schema(
     otherServicesTitle: { type: String, default: "Our Other Services" },
     otherServices: {
       type: String,
-      default: "Priyani Diver’s Room & Prime Auto Service",
+      default: "Priyani Driver’s Room & Prime Auto Service",
     },
 
     localLabel: { type: String, default: "Local" },

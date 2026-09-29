@@ -81,7 +81,7 @@ const run = async () => {
     addressLine: "Sigiriya Road, Pothana, Kimbissa",
     phone: "+94 70 644 5506 / +94 71 778 5189",
     otherServicesTitle: "Our Other Services",
-    otherServices: "Priyani Diver’s Room & Prime Auto Service",
+    otherServices: "Priyani Driver’s Room & Prime Auto Service",
   };
 
   let filled = false;

@@ -95,7 +95,7 @@ const SettingsManager = () => {
               type="text"
               value={form.otherServices}
               onChange={(e) => setField("otherServices", e.target.value)}
-              placeholder="e.g. Priyani Diver’s Room & Prime Auto Service"
+              placeholder="e.g. Priyani Driver’s Room & Prime Auto Service"
               className={inputClass}
             />
           </Field>

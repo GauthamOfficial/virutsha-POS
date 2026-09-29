@@ -10,7 +10,7 @@ const defaultSettings = {
   taxLabel: "Service Charge",
   receiptFooter: "Thank you! Please come again.",
   otherServicesTitle: "Our Other Services",
-  otherServices: "Priyani Diver’s Room & Prime Auto Service",
+  otherServices: "Priyani Driver’s Room & Prime Auto Service",
   localLabel: "Local",
   foreignLabel: "Foreigner",
 };
