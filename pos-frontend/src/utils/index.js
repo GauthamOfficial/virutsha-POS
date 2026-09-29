@@ -121,6 +121,18 @@ export const paymentLabel = (method) => paymentLabels[method] || method || "";
  * the Bills page would open on the wrong day just as the shop closes up and
  * goes to check the day's takings.
  */
+/**
+ * Splits a shop name into the word that carries the brand face and whatever
+ * follows it, which is set in capitals underneath. Driven by the name in
+ * Settings rather than hardcoded, so renaming the shop still gives a sensible
+ * mark on screen and on the bill.
+ */
+export const splitName = (name) => {
+  const words = String(name || "").trim().split(/\s+/).filter(Boolean);
+  if (words.length === 0) return { lead: "", rest: "" };
+  return { lead: words[0], rest: words.slice(1).join(" ") };
+};
+
 export const todayISO = (date = new Date()) => {
   const pad = (n) => String(n).padStart(2, "0");
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;

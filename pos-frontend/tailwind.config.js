@@ -59,6 +59,8 @@ export default {
         faint: "#8A7358", // hints, placeholders
       },
       fontFamily: {
+        // The wordmark only. Heavy, geometric and oblique.
+        brand: ["Wordmark", "Arial Black", "Helvetica", "sans-serif"],
         display: ["Marcellus", "Georgia", "serif"],
         sans: ["Inter", "system-ui", "sans-serif"],
       },

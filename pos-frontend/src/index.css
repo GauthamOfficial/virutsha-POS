@@ -1,5 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600;700;800&display=swap");
 
+/* The wordmark face, served from this machine rather than Google Fonts, so
+   the name still renders correctly when the shop has no internet. Montserrat
+   is SIL Open Font Licensed, which permits commercial use and embedding. */
+@font-face {
+  font-family: "Wordmark";
+  src: url("/fonts/montserrat-800-italic.woff2") format("woff2");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

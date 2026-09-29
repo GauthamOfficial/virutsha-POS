@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { FaCheck, FaPrint } from "react-icons/fa6";
-import { formatMoney, formatDateAndTime, paymentLabel } from "../../utils";
+import { formatMoney, formatDateAndTime, paymentLabel, splitName } from "../../utils";
 
 /**
  * The printable bill. Laid out for an 80mm thermal roll, but it prints fine on
@@ -13,6 +13,10 @@ const Invoice = ({ order, onClose }) => {
   const settings = useSelector((state) => state.settings.data);
   const currency = settings.currencySymbol;
 
+  // Same split as the on-screen wordmark: first word in the brand face, the
+  // rest in capitals underneath.
+  const { lead, rest } = splitName(settings.restaurantName || "Restaurant");
+
   const handlePrint = () => {
     const printWindow = window.open("", "", "width=380,height=700");
     if (!printWindow) return;
@@ -22,6 +26,12 @@ const Invoice = ({ order, onClose }) => {
   <head>
     <title>Bill #${order.invoiceNo}</title>
     <style>
+      @font-face {
+        font-family: "Wordmark";
+        src: url("${window.location.origin}/fonts/montserrat-800-italic.woff2") format("woff2");
+        font-weight: 800;
+        font-style: italic;
+      }
       @page { size: 80mm auto; margin: 4mm; }
       * { box-sizing: border-box; }
       body {
@@ -32,7 +42,25 @@ const Invoice = ({ order, onClose }) => {
         padding: 4px;
         width: 72mm;
       }
-      h1 { font-size: 16px; text-align: center; margin: 0 0 2px; }
+      .shop-name {
+        font-family: "Wordmark", "Arial Black", Helvetica, sans-serif;
+        font-style: italic;
+        font-weight: 800;
+        font-size: 30px;
+        line-height: 1;
+        letter-spacing: -0.5px;
+        text-align: center;
+        margin: 0;
+      }
+      .shop-sub {
+        font-family: Arial, Helvetica, sans-serif;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-align: center;
+        margin: 3px 0 0;
+      }
       .center { text-align: center; }
       .muted { color: #333; font-size: 11px; }
       .divider { border-top: 1px dashed #000; margin: 6px 0; }
@@ -90,9 +118,14 @@ const Invoice = ({ order, onClose }) => {
 
         {/* Everything inside this div is what gets printed */}
         <div ref={receiptRef} className="font-mono text-[13px] text-black">
-          <h1 className="text-center text-base font-bold">
-            {settings.restaurantName || "Restaurant"}
+          <h1 className="shop-name text-center font-brand text-3xl italic leading-none tracking-tight">
+            {lead.toUpperCase()}
           </h1>
+          {rest && (
+            <p className="shop-sub text-center text-[11px] font-bold tracking-[0.25em]">
+              {rest.toUpperCase()}
+            </p>
+          )}
           {settings.addressLine && (
             <p className="center muted text-center text-[11px]">{settings.addressLine}</p>
           )}
